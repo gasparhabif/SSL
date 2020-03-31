@@ -1,5 +1,5 @@
 
-###1. Parte I
+<h3>1. Parte I</h3>
 1. La tarea más representativa para la que un Ingeniero en Sistemas de Información está capacitado es la resolución de problemas. Para resolver dichos problemas construye artefactos o mecanismos utilizando técnicas y herramientas basadas en las ciencias básicas.
 2. La información es un concepto objetivo con carga significativa o importancia. Son datos procesados.
 3. Algoritmos y Estructuras de Datos, Matemática Discreta, Sintaxis y Semántica de los Lenguajes, Paradigmas de Programación, Gestión de Datos. 
@@ -7,7 +7,7 @@
 5. El paradigma de programación aplicado en primer año de la carrera
 6. La abstracción es el concepto de separación, que se basa en dejar de lado los detalles insignificantes para enfocarse en lo más importante.
 
-###2. Parte II
+<h3>2. Parte II</h3>
 1. Mientras que un conjunto puede ser una agrupación de elementos sin relación, las secuencias siempre siguen un patrón que relaciona los elementos. 
 2. Una secuencia matemática es una serie de elementos que se suceden unos a otros y guardan una relación matemática entre si.
 3. Una función matemática es el vinculo entre elementos de dos conjuntos, de forma que un hecho depende de del otro. Es decir que para todo elemento de salida existe un único elemento de llegada.
@@ -17,7 +17,7 @@
 7. Un Lenguaje Formal es un subconjunto de un Alfabeto formado por palabras de longitud variable que están formadas con letras de dicho Alfabeto
 8. Un autómata finito es aquel que reconoce los lenguajes regulares
 
-###3. Parte III
+<h3>3. Parte III</h3>
 1. Secuencia de pasos o instrucciones, a realizar sobre un autómata para alcanzar un resultado deseado. 
 2. La programación estructurada es aquella solo permite la utilización de tres estructuras.
 3. Las tres estructuras de control de flujo de ejecución existentes en la programación estructurada son Asignación, selección y repetición. 
