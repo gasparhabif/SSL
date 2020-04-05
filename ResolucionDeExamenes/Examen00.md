@@ -9,7 +9,7 @@
 
 4. Sistemas y Organizaciones, Análisis de Sistemas, Diseño de Sistemas.
 
-5. El paradigma de programación aplicado en primer año de la carrera es funcional
+5. El paradigma de programación aplicado en primer año de la carrera es imperativo
 
 6. La abstracción es el concepto de separación, que se basa en dejar de lado los detalles insignificantes para enfocarse en lo más importante.
 
