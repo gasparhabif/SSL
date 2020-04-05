@@ -1,5 +1,6 @@
 
 <h3>1. Parte I</h3>
+
 1. La tarea más representativa para la que un Ingeniero en Sistemas de Información está capacitado es la resolución de problemas. Para resolver dichos problemas construye artefactos o mecanismos utilizando técnicas y herramientas basadas en las ciencias básicas.
 
 2. La información es un concepto objetivo con carga significativa o importancia. Son datos procesados.
@@ -8,11 +9,12 @@
 
 4. Sistemas y Organizaciones, Análisis de Sistemas, Diseño de Sistemas.
 
-5. El paradigma de programación aplicado en primer año de la carrera
+5. El paradigma de programación aplicado en primer año de la carrera es funcional
 
 6. La abstracción es el concepto de separación, que se basa en dejar de lado los detalles insignificantes para enfocarse en lo más importante.
 
 <h3>2. Parte II</h3>
+
 1. Mientras que un conjunto puede ser una agrupación de elementos sin relación, las secuencias siempre siguen un patrón que relaciona los elementos. 
 
 2. Una secuencia matemática es una serie de elementos que se suceden unos a otros y guardan una relación matemática entre si.
@@ -30,6 +32,7 @@
 8. Un autómata finito es aquel que reconoce los lenguajes regulares
 
 <h3>3. Parte III</h3>
+
 1. Secuencia de pasos o instrucciones, a realizar sobre un autómata para alcanzar un resultado deseado. 
 
 2. La programación estructurada es aquella solo permite la utilización de tres estructuras.
