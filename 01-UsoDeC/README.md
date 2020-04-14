@@ -1,0 +1,1 @@
+Se enlistan distintas tecnologias que utilizo en mi día a día, junto a sus repositorios públicos de encontrarse. Se detalla ademas, aquellas que estan programadas con C, o lenguajes en base C.
