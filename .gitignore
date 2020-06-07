@@ -1,2 +1,6 @@
 /Books
 *.DS_Store
+*.exe
+*.o
+*.i
+*.s
