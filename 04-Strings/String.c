@@ -5,9 +5,9 @@
 
 #include "String.h"
 
-unsigned int GetLength(const char *characterString)
+size_t GetLength(const char *characterString)
 {
-    unsigned int i = 0;
+    size_t i = 0;
     while (characterString[i] != '\0')
         i++;
 
@@ -21,12 +21,12 @@ bool IsEmpty(const char *characterString)
 
 char *Power(const char *characterString, unsigned int power)
 {
-    int length = GetLength(characterString);
-    int returnLength = length * power;
+    size_t length = GetLength(characterString);
+    size_t returnLength = length * power;
 
     char *returnString = (char *)malloc((returnLength + 1) * sizeof(char));
 
-    for (unsigned int i = 0; i < returnLength; ++i)
+    for (size_t i = 0; i < returnLength; ++i)
     {
         returnString[i] = characterString[i % length];
     }
@@ -38,10 +38,10 @@ char *Power(const char *characterString, unsigned int power)
 
 char *Substring(const char *characterString, unsigned int start, unsigned int end)
 {
-    unsigned int returnLength = start - end;
+    size_t returnLength = start - end;
     char *returnString = (char *)malloc((returnLength + 1) * sizeof(char));
 
-    for (unsigned int i = 0; i < end - start; ++i)
+    for (size_t i = 0; i < end - start; ++i)
     {
         returnString[i] = characterString[start + i];
     }

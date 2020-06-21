@@ -12,7 +12,7 @@
 //   finalice en caracter nulo ('\0').
 // - Postcondición y Resultados: Retorna un entero positivo, incluyendo el cero, que representa la cantidad de
 //   caracteres que componen la cadena de la precondición.
-unsigned int GetLength(const char *characterString);
+size_t GetLength(const char *characterString);
 
 // IsEmpty
 // - Precondición y Argumentos: Consta de un unico argumento que sera una cadena que se espera,
