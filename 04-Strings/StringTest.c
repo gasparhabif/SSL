@@ -1,12 +1,13 @@
 #include <assert.h>
 #include "String.h"
+#include <string.h>
 
 // Test GetLength()
 void testGetLength()
 {
     // Test cadena estática con constante de longitud 8
     char wordWithLength[8 + 1] = "Sintaxis";
-    assert(GetLength(wordWithLength) == 5);
+    assert(GetLength(wordWithLength) == 8);
 
     // Test cadena estática con constante de longitud 0
     char wordWithNoLength[8 + 1] = "";
@@ -50,7 +51,7 @@ void testPower()
     char initialWord[3 + 1] = "SSL";
     char expectedWord[9 + 1] = "SSLSSLSSL";
 
-    assert(Power(initialWord, power) == expectedWord);
+    assert(strcmp(Power(initialWord, power), expectedWord) == 0);
 
     // Test cadena constante con longitud esperada de 9
     char *resultWord = Power("SSL", power);
@@ -58,11 +59,25 @@ void testPower()
 }
 
 // Test Substring
-void testPower()
+void testSubstring()
 {
     // Test cadena estática constante
     char initialWord[37 + 1] = "Sintaxis y Semantica de los Lenguajes";
     char expectedWord[8 + 1] = "Sintaxis";
 
-    assert(Substring(initialWord, 0, 9) == expectedWord);
+    assert(strcmp(Substring(initialWord, 0, 8), expectedWord) == 0);
+}
+
+int main()
+{
+    printf("Comenzando tests...\n");
+
+    testGetLength();
+    testIsEmpty();
+    testPower();
+    testSubstring();
+
+    printf("Tests finalizados correctamente.\n");
+
+    return 0;
 }

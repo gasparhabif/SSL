@@ -1,23 +1,14 @@
-IDIR =../04-Strings
-CC=clang
-CFLAGS=-std=c18
+SRC = String.c StringTest.c
+OBJ = String.o StringTest.o
+BIN = StringTest.out
+CC = clang
+CFLAGS = -std=c18
 
-ODIR=./
+$(BIN): $(OBJ)
+	$(CC) $(OBJ) -o $(BIN) $(CFLAGS)
 
-_DEPS = String.h
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
-
-_OBJ = StringTest.o 
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
-
-$(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
-
-# testmake: $(OBJ)
-# 	$(CC) -o $@ $^ $(CFLAGS)
-
-.PHONY: clean
-
-clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+run: $(BIN)
+	$(BIN)
+	
+$(OBJ): $(SRC)
+	$(CC) -c $(SRC) $(CFLAGS)
