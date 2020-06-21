@@ -1,7 +1,7 @@
 # Análisis Comparativo C vs Java
 ## a. ¿El tipo es parte del lenguaje en algún nivel?
-#### - C
-#### - Java
+- #### C
+- #### Java
 
 ## b. ¿El tipo es parte de la biblioteca?
 #### - C
