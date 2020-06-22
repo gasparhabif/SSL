@@ -7,11 +7,8 @@
 
 size_t GetLength(const char *characterString)
 {
-    size_t i = 0;
-    while (characterString[i] != '\0')
-        i++;
-
-    return i;
+    return characterString[0] == '\0' ? 0
+                                      : 1 + GetLength(characterString + 1);
 }
 
 bool IsEmpty(const char *characterString)
