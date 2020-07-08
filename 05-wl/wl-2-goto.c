@@ -1,44 +1,35 @@
-// wl-1-enum-switch.c
-// Word counting program with Switch, Typedef and Enum
+// wl-2-goto.c
+// Word counting program with Goto
 // Gaspar Habif
 // 20200708
 
 #include <stdio.h>
-#include <stdbool.h>
-
-typedef bool State;
 
 int main()
 {
     int c, nl, nw, nc;
-
-    s = OUT;
     nl = nw = nc = 0;
 
-    while ((c = getchar()) != EOF)
+LOOP:
+    if ((c = getchar()) != EOF)
     {
         ++nc;
-        switch (c)
-        {
-        case '\n':
-            ++nl;
-            s = OUT;
-            break;
-        case ' ':
-        case '\t':
-            s = OUT;
-            break;
-
-        default:
-            ++nw;
-            s = IN;
-            break;
-        }
+        if (c == '\n')
+            goto NEW_LINE;
+        if (c == ' ' || c == '\t')
+            goto OUT;
+        goto IN;
     }
-IN:
-    printf("Algo");
-OUT:
-    printf("Otro algo");
+    goto EXIT;
 
+NEW_LINE:
+    ++nl;
+    goto OUT;
+IN:
+    goto LOOP;
+OUT:
+    ++nw;
+    goto LOOP;
+EXIT:
     printf("Lines: %d \nWords: %d \nCharacters: %d\n", nl, nw, nc);
 }
