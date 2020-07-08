@@ -4,43 +4,36 @@
 // 20200708
 
 #include <stdio.h>
-#include <stdbool.h>
 
-typedef bool State;
-enum State
-{
-    IN,
-    OUT
-};
+#define IN 1  /* inside a word */
+#define OUT 0 /* outside a word */
+
+void countElements(int);
+int nl, nw, nc;
 
 int main()
 {
-    State s;
-    int c, nl, nw, nc;
-
-    s = OUT;
     nl = nw = nc = 0;
+    countElements(OUT);
+    printf("Lines: %d \nWords: %d \nCharacters: %d\n", nl, nw, nc);
+}
 
-    while ((c = getchar()) != EOF)
+void countElements(int state)
+{
+    int c;
+    if ((c = getchar()) != EOF)
     {
         ++nc;
-        switch (c)
-        {
-        case '\n':
+        if (c == '\n')
             ++nl;
-            s = OUT;
-            break;
-        case ' ':
-        case '\t':
-            s = OUT;
-            break;
-
-        default:
+        if (c == ' ' || c == '\n' || c = '\t')
+            countElements(OUT);
+        else if (state == OUT)
+        {
             ++nw;
-            s = IN;
-            break;
+            countElements(IN);
         }
     }
 
-    printf("Lines: %d \nWords: %d \nCharacters: %d\n", nl, nw, nc);
+    return;
 }
