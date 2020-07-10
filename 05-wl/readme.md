@@ -4,4 +4,4 @@
 ![Arbol nl = nw = nc = 0](img/arbol-1b.jpg)
 
 #### c. Árbol de expresión para la expresión de control del segundo if: c == ' ' || c == '\n' || c == '\t
-![Arbol nl = nw = nc = 0](img/arbol-1c.jpeg)
+![Arbol nl = nw = nc = 0](img/arbol-1c.jpg)
