@@ -1,0 +1,16 @@
+digraph maquina_de_estado {
+	rankdir = LR;
+	ranksep = 2;
+	nodesep = 0.5;
+
+	node [shape = doublecircle style=filled]; IN OUT
+	IN [ label="IN" color="#f7ca18" ]
+	OUT [ label="OUT" color="#2ecc71" ]
+	
+	OUT -> IN [ label = "c\n++nc " ];
+	OUT -> OUT [ label = "'\\n'\n++nl\n++nc\n++nw" ];
+	OUT -> OUT [ label = "'\\t' || ' '\n++nc\n++nw " fontcolor=gray color=gray];
+	IN -> IN [ label = "c\n++nc " ];
+	IN -> OUT [ label = "'\\t' || ' '\n++nw\n++nc" ];
+	IN -> OUT [ label = "'\\n'\n++nc\n++nl\n++nw" ];
+}
