@@ -7,10 +7,9 @@ digraph maquina_de_estado {
 	IN [ label="IN" color="#f7ca18" ]
 	OUT [ label="OUT" color="#2ecc71" ]
 	
-	OUT -> IN [ label = "c\n++nc " ];
-	OUT -> OUT [ label = "'\\n'\n++nl\n++nc\n++nw" ];
-	OUT -> OUT [ label = "'\\t' || ' '\n++nc\n++nw " fontcolor=gray color=gray];
-	IN -> IN [ label = "c\n++nc " ];
-	IN -> OUT [ label = "'\\t' || ' '\n++nw\n++nc" ];
-	IN -> OUT [ label = "'\\n'\n++nc\n++nl\n++nw" ];
+	OUT -> OUT [ label="'\\n'||'\\t'||' '" ];
+    OUT -> IN [ label="c \n putchar(c);"];
+    IN -> IN [ label="c \n putchar(c);"];
+    IN -> OUT [ label="'\\n'||'\\t'||' '\nputchar('\\n');" ];
+
 }

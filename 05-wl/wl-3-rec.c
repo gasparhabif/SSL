@@ -9,13 +9,10 @@
 #define OUT 0 /* outside a word */
 
 void countElements(int);
-int nl, nw, nc;
 
 int main()
 {
-    nl = nw = nc = 0;
     countElements(OUT);
-    printf("Lines: %d \nWords: %d \nCharacters: %d\n", nl, nw, nc);
 }
 
 void countElements(int state)
@@ -23,14 +20,15 @@ void countElements(int state)
     int c;
     if ((c = getchar()) != EOF)
     {
-        ++nc;
-        if (c == '\n')
-            ++nl;
         if (c == ' ' || c == '\n' || c = '\t')
-            countElements(OUT);
-        else if (state == OUT)
         {
-            ++nw;
+            if (state == IN)
+                putchar('\n');
+            countElements(OUT);
+        }
+        else
+        {
+            putchar(c);
             countElements(IN);
         }
     }

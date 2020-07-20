@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-typedef bool State;
+typedef int State;
 enum State
 {
     IN,
@@ -16,32 +16,31 @@ enum State
 int main()
 {
     State s;
-    int c, nl, nw, nc;
+    int c;
 
     s = OUT;
-    nl = nw = nc = 0;
 
     while ((c = getchar()) != EOF)
     {
-        ++nc;
         switch (c)
         {
-        case '\n':
-            ++nl;
-            ++nw;
-            s = OUT;
-            break;
         case ' ':
         case '\t':
-            ++nw;
-            s = OUT;
-            break;
-
+        case '\n':
+        {
+            switch (s)
+            {
+            case IN:
+                s = OUT;
+                putchar('\n');
+                break;
+            }
+        }
+        break;
         default:
             s = IN;
+            putchar(c);
             break;
         }
     }
-
-    printf("Lines: %d \nWords: %d \nCharacters: %d\n", nl, nw, nc);
 }

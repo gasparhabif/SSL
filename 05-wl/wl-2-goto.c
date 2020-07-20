@@ -7,29 +7,24 @@
 
 int main()
 {
-    int c, nl, nw, nc;
-    nl = nw = nc = 0;
+    int c;
 
 LOOP:
     if ((c = getchar()) != EOF)
     {
-        ++nc;
-        if (c == '\n')
-            goto NEW_LINE;
-        if (c == ' ' || c == '\t')
+        if (c == '\n' || c == ' ' || c == '\t')
             goto OUT;
         goto IN;
     }
+    putchar('\n');
     goto EXIT;
 
-NEW_LINE:
-    ++nl;
-    goto OUT;
 IN:
+    putchar(c);
     goto LOOP;
 OUT:
-    ++nw;
+    putchar('\n');
     goto LOOP;
 EXIT:
-    printf("Lines: %d \nWords: %d \nCharacters: %d\n", nl, nw, nc);
+    return 0;
 }
