@@ -12,6 +12,7 @@ Dichas categorías serán las siguientes:
 
 Las expresiones válidas a nivel sintáctico serán las compuestas por los elementos gramaticales correspondientes a las categorías previamente definidas de forma tal que: 
 
+ - Expresión -> Elemento
  - Expresión -> Elemento Operador Elemento
 
 Donde:  
