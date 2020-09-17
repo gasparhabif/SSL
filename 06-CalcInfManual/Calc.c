@@ -3,11 +3,7 @@
 
 int main()
 {
-
-    Token token = END;
-    while ((token = GetNextToken()) != END)
-    {
-        printf("t[%d]", token);
-    }
+    printf("Inserte la expresión a evaluar: \n");
+    Run_Scan();
     return 0;
 }
