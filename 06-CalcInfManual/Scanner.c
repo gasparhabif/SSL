@@ -9,15 +9,6 @@ static char *PRODUCT_OP = "*";
 static char *PARENTHESIS_OP = "(";
 static char *PARENTHESIS_CL = ")";
 
-void Run_Scan()
-{
-    while (CurrentToken != END)
-    {
-        PrintToken(CurrentToken);
-        CurrentToken = GetNextToken();
-    }
-}
-
 Token GetNextToken()
 {
     char newChar = getchar();
@@ -48,7 +39,8 @@ Token GetNextToken()
         return CL_PARENTHESIS;
 
     // If its not a valid token, Lexical error must be shown.
-    return ThrowLexicalError();
+    ThrowLexicalError();
+    return ERROR;
 }
 
 bool IsIncluded(char *grammar, char c)
@@ -65,14 +57,14 @@ bool IsIncluded(char *grammar, char c)
 
 void PrintToken(Token t)
 {
-    if (t != END && t != INITIAL)
+    if (t != END && t != INITIAL && t != ERROR)
     {
         char *tokenValue = TokenToString(t);
         printf("(Scanner) Token encontrado: %s \n", tokenValue);
     }
 }
 
-char *TokenToString(Token t)
+static char *TokenToString(Token t)
 {
     switch (t)
     {
@@ -93,8 +85,8 @@ char *TokenToString(Token t)
     }
 }
 
-Token ThrowLexicalError()
+static void ThrowLexicalError()
 {
     printf("(Scanner) Error Léxico\n");
-    return END;
+    exit(1);
 }
