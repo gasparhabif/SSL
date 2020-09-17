@@ -19,6 +19,7 @@ void Run_Scan()
         {
             ThrowSintacticalError();
         }
+
         lastToken = CurrentToken;
     }
 
@@ -35,21 +36,20 @@ static void ThrowSintacticalError()
 
 bool CorrectToken(Token t)
 {
-    if (t == END)
+    if (lastToken == INITIAL)
         return true;
     else
     {
-        switch (lastToken)
+        switch (t)
         {
-        case INITIAL:
-            return IsTokenConstant(t);
+        case END:
         case ADDITION:
         case PRODUCT:
-            return IsTokenConstant(t);
+            return IsTokenConstant(lastToken);
         case NUMBER:
-            return IsTokenOperator(t) || t == NUMBER;
+            return IsTokenOperator(lastToken) || lastToken == NUMBER;
         case IDENTIFICATOR:
-            return IsTokenOperator(t) || t == IDENTIFICATOR;
+            return IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR;
         default:
             return false;
         }
@@ -58,7 +58,7 @@ bool CorrectToken(Token t)
 
 static bool IsTokenOperator(Token t)
 {
-    return t == IDENTIFICATOR || t == NUMBER;
+    return t == ADDITION || t == PRODUCT;
 }
 
 static bool IsTokenConstant(Token t)
