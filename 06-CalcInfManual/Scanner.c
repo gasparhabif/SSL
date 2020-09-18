@@ -64,7 +64,7 @@ void PrintToken(Token t)
     }
 }
 
-static char *TokenToString(Token t)
+char *TokenToString(Token t)
 {
     switch (t)
     {
@@ -80,6 +80,8 @@ static char *TokenToString(Token t)
         return "Apertura de Paréntesis '('";
     case CL_PARENTHESIS:
         return "Cierre de Paréntesis ')'";
+    case END:
+        return "Enter (EOF)";
     default:
         return "";
     }

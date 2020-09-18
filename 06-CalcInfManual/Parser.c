@@ -3,8 +3,8 @@
 Token lastToken;
 int pCounter;
 
-static void ThrowSintacticalError();
-bool CorrectToken(Token t);
+static void ThrowSintacticalError(Token actual, char *expected);
+void CheckToken(Token t);
 static bool IsTokenOperator(Token t);
 static bool IsTokenConstant(Token t);
 
@@ -17,11 +17,7 @@ void Run_Scan()
     {
         CurrentToken = GetNextToken();
         PrintToken(CurrentToken);
-
-        if (!CorrectToken(CurrentToken))
-        {
-            ThrowSintacticalError();
-        }
+        CheckToken(CurrentToken);
 
         lastToken = CurrentToken;
     }
@@ -32,26 +28,31 @@ void Run_Scan()
     }
     else
     {
-        ThrowSintacticalError();
+        printf("(Parser) Error Sintáctico\n");
+        printf("\t-> Paréntesis desbalanceados");
+        exit(1);
     }
 }
 
-static void ThrowSintacticalError()
+static void ThrowSintacticalError(Token actual, char *expected)
 {
     printf("(Parser) Error Sintáctico\n");
-    // printf("(Parser) Token actual: %u", actual);
-    // printf("(Parser) Token esperado: %u", expected);
+    printf("\t-> Token actual: %s", TokenToString(actual));
+    printf("\n\t-> Tokens esperados: %s", expected);
     exit(1);
 }
 
-bool CorrectToken(Token t)
+void CheckToken(Token t)
 {
     if (lastToken == INITIAL)
     {
         if (t == OP_PARENTHESIS)
             pCounter++;
 
-        return t != ADDITION && t != PRODUCT && t != CL_PARENTHESIS;
+        if (t == ADDITION || t == PRODUCT || t == CL_PARENTHESIS)
+            ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Apertura '('");
+        else
+            return;
     }
     else
     {
@@ -60,25 +61,39 @@ bool CorrectToken(Token t)
         case END:
         case ADDITION:
         case PRODUCT:
-            return IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS;
+        {
+            if (!(IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS))
+                ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Cierre ')'");
+        }
+        break;
         case NUMBER:
-            return IsTokenOperator(lastToken) || lastToken == NUMBER || lastToken == OP_PARENTHESIS;
+        {
+            if (!(IsTokenOperator(lastToken) || lastToken == NUMBER || lastToken == OP_PARENTHESIS))
+                ThrowSintacticalError(t, "Número, Operador o Paréntesis de Apertura ')'");
+        }
+        break;
         case IDENTIFICATOR:
-            return IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR || lastToken == OP_PARENTHESIS;
+        {
+            if (!(IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR || lastToken == OP_PARENTHESIS))
+                ThrowSintacticalError(t, "Identificador, Operador o Paréntesis de Apertura ')'");
+        }
+        break;
         case OP_PARENTHESIS:
         {
-            bool valid = IsTokenOperator(lastToken) || lastToken == OP_PARENTHESIS;
             pCounter++;
-            return valid;
+            if (!(IsTokenOperator(lastToken) || lastToken == OP_PARENTHESIS))
+                ThrowSintacticalError(t, "Operador o Paréntesis de Apertura ')'");
         }
+        break;
         case CL_PARENTHESIS:
         {
-            bool valid = IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS;
             pCounter--;
-            return valid && pCounter >= 0;
+            if (!(IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS) && pCounter >= 0)
+                ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Cierre ')'");
         }
+        break;
         default:
-            return false;
+            ThrowSintacticalError(t, "[No detectado]");
         }
     }
 }

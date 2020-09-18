@@ -23,5 +23,5 @@ static Token CurrentToken = INITIAL;
 Token GetNextToken(void);
 bool IsIncluded(char *grammar, char c);
 void PrintToken(Token t);
-static char *TokenToString(Token t);
+char *TokenToString(Token t);
 static void ThrowLexicalError();
