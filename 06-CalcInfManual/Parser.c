@@ -1,6 +1,7 @@
 #include "Parser.h"
 
 Token lastToken;
+int pCounter;
 
 static void ThrowSintacticalError();
 bool CorrectToken(Token t);
@@ -10,6 +11,8 @@ static bool IsTokenConstant(Token t);
 void Run_Scan()
 {
     lastToken = INITIAL;
+    pCounter = 0;
+
     while (CurrentToken != END)
     {
         CurrentToken = GetNextToken();
@@ -23,7 +26,14 @@ void Run_Scan()
         lastToken = CurrentToken;
     }
 
-    printf("(Parser) La expresión es Válida");
+    if (pCounter == 0)
+    {
+        printf("(Parser) La expresión es Válida");
+    }
+    else
+    {
+        ThrowSintacticalError();
+    }
 }
 
 static void ThrowSintacticalError()
@@ -37,7 +47,12 @@ static void ThrowSintacticalError()
 bool CorrectToken(Token t)
 {
     if (lastToken == INITIAL)
-        return true;
+    {
+        if (t == OP_PARENTHESIS)
+            pCounter++;
+
+        return t != ADDITION && t != PRODUCT && t != CL_PARENTHESIS;
+    }
     else
     {
         switch (t)
@@ -45,11 +60,23 @@ bool CorrectToken(Token t)
         case END:
         case ADDITION:
         case PRODUCT:
-            return IsTokenConstant(lastToken);
+            return IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS;
         case NUMBER:
-            return IsTokenOperator(lastToken) || lastToken == NUMBER;
+            return IsTokenOperator(lastToken) || lastToken == NUMBER || lastToken == OP_PARENTHESIS;
         case IDENTIFICATOR:
-            return IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR;
+            return IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR || lastToken == OP_PARENTHESIS;
+        case OP_PARENTHESIS:
+        {
+            bool valid = IsTokenOperator(lastToken) || lastToken == OP_PARENTHESIS;
+            pCounter++;
+            return valid;
+        }
+        case CL_PARENTHESIS:
+        {
+            bool valid = IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS;
+            pCounter--;
+            return valid && pCounter >= 0;
+        }
         default:
             return false;
         }

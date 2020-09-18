@@ -77,9 +77,9 @@ static char *TokenToString(Token t)
     case PRODUCT:
         return "Producto [*]";
     case OP_PARENTHESIS:
-        return "Apertura de Paréntesis [(]";
+        return "Apertura de Paréntesis '('";
     case CL_PARENTHESIS:
-        return "Cierre de Paréntesis [)]";
+        return "Cierre de Paréntesis ')'";
     default:
         return "";
     }
