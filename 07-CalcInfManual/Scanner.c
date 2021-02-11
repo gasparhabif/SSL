@@ -15,11 +15,16 @@ Token GetNextToken()
     if (IsIncluded(POSSIBLE_NUM, newChar))
         return NUMBER;
 
+    // Operators
     if (IsIncluded(ADDITION_OP, newChar))
         return ADDITION;
 
     if (IsIncluded(PRODUCT_OP, newChar))
         return PRODUCT;
+
+    if (IsIncluded(ASSIGNMENT_OP, newChar))
+        return ASSIGNMENT;
+    // End Operators
 
     // Opening Parenthesis
     if (IsIncluded(PARENTHESIS_OP, newChar))
@@ -80,6 +85,5 @@ char *TokenToString(Token t)
 
 static void ThrowLexicalError()
 {
-    printf("(Scanner) Error Léxico\n");
-    exit(1);
+    printf("%s(Scanner)%s Error Léxico\n", MAGENTA_BOLD, RED);
 }
