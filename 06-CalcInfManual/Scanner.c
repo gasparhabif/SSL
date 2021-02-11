@@ -90,5 +90,5 @@ char *TokenToString(Token t)
 static void ThrowLexicalError()
 {
     printf("(Scanner) Error Léxico\n");
-    exit(1);
+    CurrentToken = ERROR;
 }

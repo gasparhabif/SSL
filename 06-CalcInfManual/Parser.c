@@ -13,7 +13,7 @@ void Run_Scan()
     lastToken = INITIAL;
     pCounter = 0;
 
-    while (CurrentToken != END)
+    while (CurrentToken != END && CurrentToken != ERROR)
     {
         CurrentToken = GetNextToken();
         PrintToken(CurrentToken);
@@ -22,14 +22,21 @@ void Run_Scan()
         lastToken = CurrentToken;
     }
 
-    if (pCounter == 0)
+    if (CurrentToken != ERROR)
     {
-        printf("(Parser) La expresión es Válida");
+        if (pCounter == 0)
+        {
+            printf("(Parser) La expresión es Válida");
+        }
+        else
+        {
+            printf("(Parser) Error Sintáctico\n");
+            printf("\t-> Paréntesis desbalanceados");
+            exit(1);
+        }
     }
     else
     {
-        printf("(Parser) Error Sintáctico\n");
-        printf("\t-> Paréntesis desbalanceados");
         exit(1);
     }
 }
@@ -39,7 +46,7 @@ static void ThrowSintacticalError(Token actual, char *expected)
     printf("(Parser) Error Sintáctico\n");
     printf("\t-> Token actual: %s", TokenToString(actual));
     printf("\n\t-> Tokens esperados: %s", expected);
-    exit(1);
+    CurrentToken = ERROR;
 }
 
 void CheckToken(Token t)
@@ -50,7 +57,11 @@ void CheckToken(Token t)
             pCounter++;
 
         if (t == ADDITION || t == PRODUCT || t == CL_PARENTHESIS)
+        {
+            CurrentToken = ERROR;
             ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Apertura '('");
+            return;
+        }
         else
             return;
     }
