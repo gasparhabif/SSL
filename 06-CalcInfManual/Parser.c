@@ -80,20 +80,20 @@ void CheckToken(Token t)
         case NUMBER:
         {
             if (!(IsTokenOperator(lastToken) || lastToken == NUMBER || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Número, Operador o Paréntesis de Apertura ')'");
+                ThrowSintacticalError(t, "Número, Operador o Paréntesis de Apertura '('");
         }
         break;
         case IDENTIFICATOR:
         {
             if (!(IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Identificador, Operador o Paréntesis de Apertura ')'");
+                ThrowSintacticalError(t, "Identificador, Operador o Paréntesis de Apertura '('");
         }
         break;
         case OP_PARENTHESIS:
         {
             pCounter++;
             if (!(IsTokenOperator(lastToken) || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Operador o Paréntesis de Apertura ')'");
+                ThrowSintacticalError(t, "Operador o Paréntesis de Apertura '('");
         }
         break;
         case CL_PARENTHESIS:
