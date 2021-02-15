@@ -18,6 +18,8 @@
 #define PARENTHESIS_OP "("
 #define PARENTHESIS_CL ")"
 
+#define BUFFER_SIZE 100
+
 enum Tokens
 {
     INITIAL = 0,
@@ -36,8 +38,15 @@ typedef enum Tokens Token;
 
 static Token currentToken = INITIAL;
 
+char buffer[BUFFER_SIZE];
+int bufferPos;
+
 Token GetNextToken(void);
 bool IsIncluded(char *grammar, char c);
 void PrintToken(Token t);
 char *TokenToString(Token t);
 static void ThrowLexicalError();
+static void ResetBuffer();
+static bool AddCharToBuffer(char c);
+static void PrintBuffer();
+static void ThrowBufferError();

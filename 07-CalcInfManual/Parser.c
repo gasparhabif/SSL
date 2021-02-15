@@ -2,19 +2,27 @@
 
 void Run_Scan()
 {
+
     CleanGlobalVariables();
     printf("Ingrese la expresión a evaluar: \n");
 
     while (currentToken != END && currentToken != ERROR)
     {
         currentToken = GetNextToken();
-        PrintToken(currentToken);
-        CheckToken(currentToken);
-
-        lastToken = currentToken;
+        // Lexical error detection
+        if (currentToken == ERROR)
+        {
+            currentToken = END;
+        }
+        else
+        {
+            PrintToken(currentToken);
+            CheckToken(currentToken);
+            lastToken = currentToken;
+        }
     }
 
-    if (currentToken != ERROR)
+    if (currentToken != ERROR && currentToken != END)
     {
         printf("%s(Parser)", BLUE_BOLD);
         if (pCounter == 0)
@@ -61,8 +69,6 @@ void CheckToken(Token t)
             currentToken = ERROR;
             return;
         }
-        else
-            return;
     }
     else
     {

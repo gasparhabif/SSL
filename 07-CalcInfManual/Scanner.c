@@ -7,13 +7,18 @@ Token GetNextToken()
     if (newChar == EOF || newChar == '\n')
         return END;
 
+    // Its a Number
+    if (IsIncluded(POSSIBLE_NUM, newChar))
+    {
+        return AddCharToBuffer(newChar) ? NUMBER : ERROR;
+    }
+    else
+    {
+        ResetBuffer();
+    }
     // Its an Identificator
     if (IsIncluded(POSSIBLE_IDS, newChar))
         return IDENTIFICATOR;
-
-    // Its a Number
-    if (IsIncluded(POSSIBLE_NUM, newChar))
-        return NUMBER;
 
     // Operators
     if (IsIncluded(ADDITION_OP, newChar))
@@ -78,6 +83,8 @@ char *TokenToString(Token t)
         return "Cierre de Paréntesis ')'";
     case END:
         return "Enter (EOF)";
+    case ERROR:
+        return "Error";
     default:
         return "";
     }
@@ -85,5 +92,45 @@ char *TokenToString(Token t)
 
 static void ThrowLexicalError()
 {
-    printf("%s(Scanner)%s Error Léxico\n", MAGENTA_BOLD, RED);
+    printf("%s(Scanner)%s Error Léxico", MAGENTA_BOLD, RED);
+}
+
+static void ResetBuffer()
+{
+    while (bufferPos >= 0)
+    {
+        buffer[bufferPos] = '\0';
+        bufferPos--;
+    }
+    bufferPos = 0;
+}
+
+static bool AddCharToBuffer(char c)
+{
+
+    if (bufferPos < (BUFFER_SIZE - 1))
+    {
+        buffer[bufferPos++] = c;
+        PrintBuffer();
+        return true;
+    }
+    else
+    {
+        ThrowBufferError();
+        return false;
+    }
+}
+
+static void PrintBuffer()
+{
+    printf("%s(Buffer)%s Actualmente almacenado en Buffer: ", "\e[0;33m", WHITE);
+
+    for (int i = 0; i <= bufferPos; i++)
+        printf("%c", buffer[i]);
+    printf("\n");
+}
+
+static void ThrowBufferError()
+{
+    printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", "\e[0;33m", RED);
 }
