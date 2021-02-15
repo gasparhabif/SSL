@@ -2,19 +2,14 @@
 
 void Run_Scan()
 {
-
     CleanGlobalVariables();
     printf("Ingrese la expresión a evaluar: \n");
 
-    while (currentToken != END && currentToken != ERROR)
+    while (currentToken != END && !AnyKindError(currentToken))
     {
         currentToken = GetNextToken();
         // Lexical error detection
-        if (currentToken == ERROR)
-        {
-            currentToken = END;
-        }
-        else
+        if (currentToken != LEXICAL_ERROR)
         {
             PrintToken(currentToken);
             CheckToken(currentToken);
@@ -22,7 +17,7 @@ void Run_Scan()
         }
     }
 
-    if (currentToken != ERROR && currentToken != END)
+    if (!AnyKindError(currentToken))
     {
         printf("%s(Parser)", BLUE_BOLD);
         if (pCounter == 0)
@@ -46,6 +41,7 @@ static void CleanGlobalVariables()
     lastToken = INITIAL;
     currentToken = INITIAL;
     pCounter = 0;
+    CleanBuffer();
 }
 
 static void ThrowSintacticalError(Token actual, char *expected)
@@ -53,7 +49,7 @@ static void ThrowSintacticalError(Token actual, char *expected)
     printf("%s(Parser) %sError Sintáctico\n", BLUE_BOLD, RED);
     printf("\t-> Token actual: %s", TokenToString(actual));
     printf("\n\t-> Tokens esperados: %s\n", expected);
-    currentToken = ERROR;
+    currentToken = SINTACTICAL_ERROR;
 }
 
 void CheckToken(Token t)
@@ -66,7 +62,7 @@ void CheckToken(Token t)
         if (t == ADDITION || t == PRODUCT || t == CL_PARENTHESIS)
         {
             ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Apertura '('");
-            currentToken = ERROR;
+            currentToken = SINTACTICAL_ERROR;
             return;
         }
     }
@@ -122,4 +118,9 @@ static bool IsTokenOperator(Token t)
 static bool IsTokenConstant(Token t)
 {
     return t == NUMBER || t == IDENTIFICATOR;
+}
+
+static bool AnyKindError(Token t)
+{
+    return t == LEXICAL_ERROR || t == SINTACTICAL_ERROR;
 }

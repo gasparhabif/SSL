@@ -30,7 +30,8 @@ enum Tokens
     OP_PARENTHESIS,
     CL_PARENTHESIS,
     ASSIGNMENT,
-    ERROR,
+    LEXICAL_ERROR,
+    SINTACTICAL_ERROR,
     END
 };
 
@@ -45,8 +46,7 @@ Token GetNextToken(void);
 bool IsIncluded(char *grammar, char c);
 void PrintToken(Token t);
 char *TokenToString(Token t);
-static void ThrowLexicalError();
-static void ResetBuffer();
+void CleanBuffer();
+static Token ThrowError(bool b);
 static bool AddCharToBuffer(char c);
 static void PrintBuffer();
-static void ThrowBufferError();

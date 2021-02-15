@@ -10,11 +10,11 @@ Token GetNextToken()
     // Its a Number
     if (IsIncluded(POSSIBLE_NUM, newChar))
     {
-        return AddCharToBuffer(newChar) ? NUMBER : ERROR;
+        return AddCharToBuffer(newChar) ? NUMBER : ThrowError(true);
     }
     else
     {
-        ResetBuffer();
+        CleanBuffer();
     }
     // Its an Identificator
     if (IsIncluded(POSSIBLE_IDS, newChar))
@@ -40,8 +40,7 @@ Token GetNextToken()
         return CL_PARENTHESIS;
 
     // If its not a valid token, Lexical error must be shown.
-    ThrowLexicalError();
-    return ERROR;
+    return ThrowError(false);
 }
 
 bool IsIncluded(char *grammar, char c)
@@ -58,7 +57,7 @@ bool IsIncluded(char *grammar, char c)
 
 void PrintToken(Token t)
 {
-    if (t != END && t != INITIAL && t != ERROR)
+    if (t != END && t != INITIAL)
     {
         char *tokenValue = TokenToString(t);
         printf("%s(Scanner)%s Token encontrado: %s %s \n", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
@@ -83,19 +82,27 @@ char *TokenToString(Token t)
         return "Cierre de Paréntesis ')'";
     case END:
         return "Enter (EOF)";
-    case ERROR:
-        return "Error";
     default:
         return "";
     }
 }
 
-static void ThrowLexicalError()
+static Token ThrowError(bool isBufferError)
 {
-    printf("%s(Scanner)%s Error Léxico", MAGENTA_BOLD, RED);
+    if (isBufferError)
+    {
+        printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", "\e[0;33m", RED);
+    }
+    else
+    {
+        printf("%s(Scanner)%s Error Léxico\n", MAGENTA_BOLD, RED);
+    }
+
+    fseek(stdin, 0, SEEK_END);
+    return LEXICAL_ERROR;
 }
 
-static void ResetBuffer()
+void CleanBuffer()
 {
     while (bufferPos >= 0)
     {
@@ -116,7 +123,6 @@ static bool AddCharToBuffer(char c)
     }
     else
     {
-        ThrowBufferError();
         return false;
     }
 }
@@ -128,9 +134,4 @@ static void PrintBuffer()
     for (int i = 0; i <= bufferPos; i++)
         printf("%c", buffer[i]);
     printf("\n");
-}
-
-static void ThrowBufferError()
-{
-    printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", "\e[0;33m", RED);
 }
