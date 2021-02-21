@@ -77,7 +77,7 @@ static void PrintResult()
         if (pCounter == 0)
         {
             printf("%s La expresión es Válida\n", GREEN);
-            printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE, WHITE_BOLD, result);
+            printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE_BOLD, CYAN_BOLD, result);
         }
         else
         {
