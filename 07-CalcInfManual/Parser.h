@@ -8,7 +8,7 @@
 Token lastToken;
 int pCounter;
 int result;
-bool operationStarted;
+Token lastOperation;
 
 void RunScan();
 static void ThrowSintacticalError(Token actual, char *expected);

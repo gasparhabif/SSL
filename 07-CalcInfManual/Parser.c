@@ -29,13 +29,38 @@ static void EvaluateExpresion()
     case ADDITION:
     {
         result += BufferValue();
+        lastOperation = ADDITION;
+        CleanBuffer();
+    }
+    break;
+    case PRODUCT:
+    {
+        if (result == 0)
+            result = BufferValue();
+        else
+            result *= BufferValue();
+        lastOperation = PRODUCT;
         CleanBuffer();
     }
     break;
     case END:
     {
-        result += BufferValue();
-        CleanBuffer();
+        switch (lastOperation)
+        {
+        case ADDITION:
+            result += BufferValue();
+            break;
+        case PRODUCT:
+        {
+            if (result == 0)
+                result = 1;
+            result *= BufferValue();
+        }
+        break;
+
+        default:
+            break;
+        }
         printf("(Calc) El resultado de la expresión es: %i\n", result);
     }
     break;
@@ -70,7 +95,7 @@ static void CleanGlobalVariables()
     currentToken = INITIAL;
     pCounter = 0;
     result = 0;
-    operationStarted = false;
+    lastOperation = INITIAL;
     CleanBuffer();
 }
 
