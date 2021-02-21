@@ -2,7 +2,7 @@
 
 int main()
 {
-    Run_Scan();
+    RunScan();
 
     return 0;
 }

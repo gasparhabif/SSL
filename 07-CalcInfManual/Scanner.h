@@ -13,7 +13,7 @@
 
 #define ADDITION_OP "+"
 #define PRODUCT_OP "*"
-#define ASSIGNMENT_OP "="
+#define ASSIGNATION_OP "="
 
 #define PARENTHESIS_OP "("
 #define PARENTHESIS_CL ")"
@@ -29,7 +29,7 @@ enum Tokens
     PRODUCT,
     OP_PARENTHESIS,
     CL_PARENTHESIS,
-    ASSIGNMENT,
+    ASSIGNATION,
     LEXICAL_ERROR,
     SINTACTICAL_ERROR,
     END

@@ -1,6 +1,6 @@
 #include "Parser.h"
 
-void Run_Scan()
+void RunScan()
 {
     CleanGlobalVariables();
     printf("Ingrese la expresión a evaluar: \n");
@@ -13,10 +13,40 @@ void Run_Scan()
         {
             PrintToken(currentToken);
             CheckToken(currentToken);
+            EvaluateExpresion();
             lastToken = currentToken;
         }
     }
 
+    PrintResult();
+    RunScan();
+}
+
+static void EvaluateExpresion()
+{
+    switch (currentToken)
+    {
+    case ADDITION:
+    {
+        result += BufferValue();
+        CleanBuffer();
+    }
+    break;
+    case END:
+    {
+        result += BufferValue();
+        CleanBuffer();
+        printf("(Calc) El resultado de la expresión es: %i\n", result);
+    }
+    break;
+
+    default:
+        break;
+    }
+}
+
+static void PrintResult()
+{
     if (!AnyKindError(currentToken))
     {
         printf("%s(Parser)", BLUE_BOLD);
@@ -30,8 +60,6 @@ void Run_Scan()
             printf("\t-> Paréntesis desbalanceados\n");
         }
     }
-
-    Run_Scan();
 }
 
 static void CleanGlobalVariables()
@@ -41,6 +69,8 @@ static void CleanGlobalVariables()
     lastToken = INITIAL;
     currentToken = INITIAL;
     pCounter = 0;
+    result = 0;
+    operationStarted = false;
     CleanBuffer();
 }
 
@@ -112,7 +142,7 @@ void CheckToken(Token t)
 
 static bool IsTokenOperator(Token t)
 {
-    return t == ADDITION || t == PRODUCT;
+    return t == ADDITION || t == PRODUCT || t == ASSIGNATION;
 }
 
 static bool IsTokenConstant(Token t)
@@ -123,4 +153,9 @@ static bool IsTokenConstant(Token t)
 static bool AnyKindError(Token t)
 {
     return t == LEXICAL_ERROR || t == SINTACTICAL_ERROR;
+}
+
+static int BufferValue()
+{
+    return atoi(buffer);
 }

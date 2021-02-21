@@ -12,10 +12,7 @@ Token GetNextToken()
     {
         return AddCharToBuffer(newChar) ? NUMBER : ThrowError(true);
     }
-    else
-    {
-        CleanBuffer();
-    }
+
     // Its an Identificator
     if (IsIncluded(POSSIBLE_IDS, newChar))
         return IDENTIFICATOR;
@@ -27,8 +24,8 @@ Token GetNextToken()
     if (IsIncluded(PRODUCT_OP, newChar))
         return PRODUCT;
 
-    if (IsIncluded(ASSIGNMENT_OP, newChar))
-        return ASSIGNMENT;
+    if (IsIncluded(ASSIGNATION_OP, newChar))
+        return ASSIGNATION;
     // End Operators
 
     // Opening Parenthesis
@@ -60,7 +57,7 @@ void PrintToken(Token t)
     if (t != END && t != INITIAL)
     {
         char *tokenValue = TokenToString(t);
-        printf("%s(Scanner)%s Token encontrado: %s %s \n", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
+        printf("%s(Scanner)%s Token encontrado: %s%s \n", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
     }
 }
 
@@ -82,6 +79,8 @@ char *TokenToString(Token t)
         return "Cierre de Paréntesis ')'";
     case END:
         return "Enter (EOF)";
+    case ASSIGNATION:
+        return "Asignación [=]";
     default:
         return "";
     }
@@ -95,7 +94,7 @@ static Token ThrowError(bool isBufferError)
     }
     else
     {
-        printf("%s(Scanner)%s Error Léxico\n", MAGENTA_BOLD, RED);
+        printf("%s(Scanner)%s Error Léxico. Token invalido\n", MAGENTA_BOLD, RED);
     }
 
     fseek(stdin, 0, SEEK_END);
