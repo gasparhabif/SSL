@@ -61,7 +61,6 @@ static void EvaluateExpresion()
         default:
             break;
         }
-        printf("(Calc) El resultado de la expresión es: %i\n", result);
     }
     break;
 
@@ -78,6 +77,7 @@ static void PrintResult()
         if (pCounter == 0)
         {
             printf("%s La expresión es Válida\n", GREEN);
+            printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE, WHITE_BOLD, result);
         }
         else
         {
