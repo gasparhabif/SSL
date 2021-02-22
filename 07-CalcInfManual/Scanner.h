@@ -31,8 +31,8 @@ typedef enum Tokens Token;
 
 static Token currentToken = INITIAL;
 
-static char buffer[BUFFER_SIZE];
-static int bufferPos;
+char buffer[BUFFER_SIZE];
+int bufferPos;
 
 Token GetNextToken(void);
 bool IsIncluded(char *grammar, char c);

@@ -90,7 +90,7 @@ static Token ThrowError(bool isBufferError)
 {
     if (isBufferError)
     {
-        printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", "\e[0;33m", RED);
+        printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", YELLOW_BOLD, RED);
     }
     else
     {
@@ -109,6 +109,7 @@ void CleanBuffer()
         bufferPos--;
     }
     bufferPos = 0;
+    printf("%s(Buffer)%s Limpiado\n", YELLOW_BOLD, WHITE);
 }
 
 static bool AddCharToBuffer(char c)
