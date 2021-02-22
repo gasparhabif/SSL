@@ -1,4 +1,5 @@
 #include "Scanner.h"
+#include "Memory.h"
 
 Token lastToken;
 int pCounter;
