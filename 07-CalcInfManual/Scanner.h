@@ -39,6 +39,6 @@ bool IsIncluded(char *grammar, char c);
 void PrintToken(Token t);
 char *TokenToString(Token t);
 void CleanBuffer();
-static Token ThrowError(bool b);
+static Token ThrowException(bool b);
 static bool AddCharToBuffer(char c);
 static void PrintBuffer();

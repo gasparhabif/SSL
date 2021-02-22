@@ -2,13 +2,15 @@
 
 struct MemoryBlock
 {
-    char *id;
+    char id[100];
     int value;
 };
 
 struct MemoryBlock memory[MEMORY_SIZE];
 
-static void AddToMemory(char *id, int v);
-static struct MemoryBlock GetFromMemory(char *id);
-static void ThrowOutOfMemoryError();
-// static int FindFreeSpace();
+void AddToMemory(char *id);
+void SetMemoryValue(int i);
+void PrintMemory();
+static struct MemoryBlock GetMemoryBlock(char *id);
+static void ThrowOutOfMemoryException();
+static int FindFreeSpace();

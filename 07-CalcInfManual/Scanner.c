@@ -10,12 +10,12 @@ Token GetNextToken()
     // Its a Number
     if (IsIncluded(POSSIBLE_NUM, newChar))
     {
-        return AddCharToBuffer(newChar) ? NUMBER : ThrowError(true);
+        return AddCharToBuffer(newChar) ? NUMBER : ThrowException(true);
     }
 
     // Its an Identificator
     if (IsIncluded(POSSIBLE_IDS, newChar))
-        return IDENTIFICATOR;
+        return AddCharToBuffer(newChar) ? IDENTIFICATOR : ThrowException(true);
 
     // Operators
     if (IsIncluded(ADDITION_OP, newChar))
@@ -37,7 +37,7 @@ Token GetNextToken()
         return CL_PARENTHESIS;
 
     // If its not a valid token, Lexical error must be shown.
-    return ThrowError(false);
+    return ThrowException(false);
 }
 
 bool IsIncluded(char *grammar, char c)
@@ -86,7 +86,7 @@ char *TokenToString(Token t)
     }
 }
 
-static Token ThrowError(bool isBufferError)
+static Token ThrowException(bool isBufferError)
 {
     if (isBufferError)
     {

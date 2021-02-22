@@ -7,7 +7,7 @@ int result;
 Token lastOperation;
 
 void RunScan();
-static void ThrowSintacticalError(Token actual, char *expected);
+static void ThrowSintacticalException(Token actual, char *expected);
 void CheckToken(Token t);
 static bool IsTokenOperator(Token t);
 static bool IsTokenConstant(Token t);

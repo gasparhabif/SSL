@@ -45,7 +45,9 @@ static void EvaluateExpresion()
     break;
     case ASSIGNATION:
     {
-        // printf("\nEspacio libre en: %i\n", FindFreeSpace());
+        AddToMemory(buffer);
+        lastOperation = ASSIGNATION;
+        CleanBuffer();
     }
     break;
     case END:
@@ -60,6 +62,11 @@ static void EvaluateExpresion()
             if (result == 0)
                 result = 1;
             result *= BufferValue();
+        }
+        break;
+        case ASSIGNATION:
+        {
+            SetMemoryValue(BufferValue());
         }
         break;
 
@@ -79,6 +86,7 @@ static void PrintResult()
     if (!AnyKindError(currentToken))
     {
         CleanBuffer();
+        PrintMemory();
         printf("%s(Parser)", BLUE_BOLD);
         if (pCounter == 0)
         {
@@ -104,7 +112,7 @@ static void CleanGlobalVariables()
     lastOperation = INITIAL;
 }
 
-static void ThrowSintacticalError(Token actual, char *expected)
+static void ThrowSintacticalException(Token actual, char *expected)
 {
     printf("%s(Parser) %sError Sintáctico\n", BLUE_BOLD, RED);
     printf("\t-> Token actual: %s", TokenToString(actual));
@@ -121,7 +129,7 @@ void CheckToken(Token t)
 
         if (t == ADDITION || t == PRODUCT || t == CL_PARENTHESIS)
         {
-            ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Apertura '('");
+            ThrowSintacticalException(t, "Número, Identificador o Paréntesis de Apertura '('");
             currentToken = SINTACTICAL_ERROR;
             return;
         }
@@ -130,42 +138,48 @@ void CheckToken(Token t)
     {
         switch (t)
         {
+        case ASSIGNATION:
+        {
+            if (lastToken != IDENTIFICATOR)
+                ThrowSintacticalException(t, "Identificador");
+        }
+        break;
         case END:
         case ADDITION:
         case PRODUCT:
         {
             if (!(IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS))
-                ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Cierre ')'");
+                ThrowSintacticalException(t, "Número, Identificador o Paréntesis de Cierre ')'");
         }
         break;
         case NUMBER:
         {
             if (!(IsTokenOperator(lastToken) || lastToken == NUMBER || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Número, Operador o Paréntesis de Apertura '('");
+                ThrowSintacticalException(t, "Número, Operador o Paréntesis de Apertura '('");
         }
         break;
         case IDENTIFICATOR:
         {
             if (!(IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Identificador, Operador o Paréntesis de Apertura '('");
+                ThrowSintacticalException(t, "Identificador, Operador o Paréntesis de Apertura '('");
         }
         break;
         case OP_PARENTHESIS:
         {
             pCounter++;
             if (!(IsTokenOperator(lastToken) || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Operador o Paréntesis de Apertura '('");
+                ThrowSintacticalException(t, "Operador o Paréntesis de Apertura '('");
         }
         break;
         case CL_PARENTHESIS:
         {
             pCounter--;
             if (!(IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS) && pCounter >= 0)
-                ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Cierre ')'");
+                ThrowSintacticalException(t, "Número, Identificador o Paréntesis de Cierre ')'");
         }
         break;
         default:
-            ThrowSintacticalError(t, "[No detectado]");
+            ThrowSintacticalException(t, "[No detectado]");
         }
     }
 }
