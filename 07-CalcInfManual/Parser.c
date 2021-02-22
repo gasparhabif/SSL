@@ -2,7 +2,6 @@
 
 void RunScan()
 {
-    CleanGlobalVariables();
     printf("Ingrese la expresión a evaluar: \n");
 
     while (currentToken != END && !AnyKindError(currentToken))
@@ -19,6 +18,7 @@ void RunScan()
     }
 
     PrintResult();
+    CleanGlobalVariables();
     RunScan();
 }
 
@@ -41,6 +41,11 @@ static void EvaluateExpresion()
             result *= BufferValue();
         lastOperation = PRODUCT;
         CleanBuffer();
+    }
+    break;
+    case ASSIGNATION:
+    {
+        // printf("\nEspacio libre en: %i\n", FindFreeSpace());
     }
     break;
     case END:
@@ -73,6 +78,7 @@ static void PrintResult()
 {
     if (!AnyKindError(currentToken))
     {
+        CleanBuffer();
         printf("%s(Parser)", BLUE_BOLD);
         if (pCounter == 0)
         {
@@ -96,7 +102,6 @@ static void CleanGlobalVariables()
     pCounter = 0;
     result = 0;
     lastOperation = INITIAL;
-    CleanBuffer();
 }
 
 static void ThrowSintacticalError(Token actual, char *expected)
