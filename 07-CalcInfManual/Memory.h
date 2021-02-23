@@ -12,5 +12,6 @@ void AddToMemory(char *id);
 void SetMemoryValue(int i);
 void PrintMemory();
 static struct MemoryBlock GetMemoryBlock(char *id);
-static void ThrowOutOfMemoryException();
+static void ThrowMemoryException(int e);
 static int FindFreeSpace();
+static bool CheckIdExistence(char *id);
