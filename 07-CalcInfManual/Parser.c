@@ -35,10 +35,7 @@ static void EvaluateExpresion()
     break;
     case PRODUCT:
     {
-        if (result == 0)
-            result = BufferValue();
-        else
-            result *= BufferValue();
+        result = result == 0 ? BufferValue() : result * BufferValue();
         lastOperation = PRODUCT;
         CleanBuffer();
     }
@@ -55,13 +52,13 @@ static void EvaluateExpresion()
         switch (lastOperation)
         {
         case ADDITION:
+        {
             result += BufferValue();
-            break;
+        }
+        break;
         case PRODUCT:
         {
-            if (result == 0)
-                result = 1;
-            result *= BufferValue();
+            result = result == 0 ? 1 : result * BufferValue();
         }
         break;
         case ASSIGNATION:
@@ -201,5 +198,5 @@ static bool AnyKindError(Token t)
 
 static int BufferValue()
 {
-    return atoi(buffer);
+    return CheckIdExistence(buffer) ? GetMemoryValue(buffer) : atoi(buffer);
 }

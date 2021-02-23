@@ -15,11 +15,24 @@ void AddToMemory(char *id)
     }
     else
     {
+        overwritePos = GetMemoryPos(id);
         ThrowMemoryException(2);
     }
 }
 
-static bool CheckIdExistence(char *id)
+static int GetMemoryPos(char *id)
+{
+    for (int i = 0; i <= LastMemPos(); i++)
+    {
+        struct MemoryBlock mem = memory[i];
+        if (!strcmp(mem.id, id))
+            return i;
+    }
+    ThrowMemoryException(3);
+    return -1;
+}
+
+bool CheckIdExistence(char *id)
 {
     for (int i = 0; i < FindFreeSpace(); i++)
     {
@@ -31,8 +44,26 @@ static bool CheckIdExistence(char *id)
 
 void SetMemoryValue(int value)
 {
-    int lastPos = FindFreeSpace() - 1;
-    memory[lastPos].value = value;
+    overwritePos = overwritePos == -1 ? LastMemPos() : overwritePos;
+    memory[overwritePos].value = value;
+    overwritePos = -1;
+}
+
+int GetMemoryValue(char *id)
+{
+    for (int i = 0; i <= LastMemPos(); i++)
+    {
+        struct MemoryBlock mem = memory[i];
+        if (!strcmp(mem.id, id))
+            return mem.value;
+    }
+    ThrowMemoryException(3);
+    return -1;
+}
+
+static int LastMemPos()
+{
+    return FindFreeSpace() - 1;
 }
 
 int FindFreeSpace()
@@ -61,6 +92,9 @@ static void ThrowMemoryException(int e)
     case 2:
         printf("El identificador ingresado ya existe, será sobreescrito con el nuevo valor.\n");
         break;
+    case 3:
+        printf("El identificador solicitado no existe en memoria.\n");
+        break;
     default:
         break;
     }
@@ -68,8 +102,7 @@ static void ThrowMemoryException(int e)
 
 void PrintMemory()
 {
-    int lastPos = FindFreeSpace();
-    for (int i = 0; i < lastPos; i++)
+    for (int i = 0; i < FindFreeSpace(); i++)
     {
         printf("%s(Memory)%s Encontrado el identificador: %s ", RED_BOLD, WHITE, memory[i].id);
         printf("con el valor: %i ", memory[i].value);
