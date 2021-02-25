@@ -42,14 +42,7 @@ Token GetNextToken()
 
 bool IsIncluded(char *grammar, char c)
 {
-    size_t length = strlen(grammar);
-
-    for (int i = 0; i < length; i++)
-    {
-        if (grammar[i] == c)
-            return true;
-    }
-    return false;
+    return strstr(grammar, (char[2]){(char)c, '\0'}) != NULL;
 }
 
 void PrintToken(Token t)
