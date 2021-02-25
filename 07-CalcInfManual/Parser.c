@@ -114,6 +114,7 @@ static void ThrowSintacticalException(Token actual, char *expected)
     printf("%s(Parser) %sError Sintáctico\n", BLUE_BOLD, RED);
     printf("\t-> Token actual: %s", TokenToString(actual));
     printf("\n\t-> Tokens esperados: %s\n", expected);
+    CleanBuffer();
     currentToken = SINTACTICAL_ERROR;
 }
 

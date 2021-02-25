@@ -97,6 +97,7 @@ static Token ThrowException(bool isBufferError)
         printf("%s(Scanner)%s Error Léxico. Token invalido\n", MAGENTA_BOLD, RED);
     }
 
+    CleanBuffer();
     fseek(stdin, 0, SEEK_END);
     return LEXICAL_ERROR;
 }
