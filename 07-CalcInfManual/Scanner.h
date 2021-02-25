@@ -29,8 +29,6 @@ enum Tokens
 
 typedef enum Tokens Token;
 
-static Token currentToken = INITIAL;
-
 char buffer[BUFFER_SIZE];
 int bufferPos;
 

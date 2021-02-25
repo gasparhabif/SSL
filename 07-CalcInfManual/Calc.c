@@ -2,7 +2,6 @@
 
 int main()
 {
-    RunScan();
-
+    RunScan(INITIAL, INITIAL);
     return 0;
 }

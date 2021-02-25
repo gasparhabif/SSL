@@ -74,6 +74,8 @@ char *TokenToString(Token t)
         return "Enter (EOF)";
     case ASSIGNATION:
         return "Asignación [=]";
+    case INITIAL:
+        return "Inicial";
     default:
         return "";
     }
