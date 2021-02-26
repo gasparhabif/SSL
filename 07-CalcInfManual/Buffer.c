@@ -1,4 +1,5 @@
 #include "Buffer.h"
+#include "ErrorHandler.h"
 
 void CleanBuffer()
 {
@@ -11,18 +12,17 @@ void CleanBuffer()
     printf("%s(Buffer)%s Limpiado\n", YELLOW_BOLD, WHITE);
 }
 
-bool AddCharToBuffer(char c)
+void AddCharToBuffer(char c)
 {
 
     if (bufferPos < (BUFFER_SIZE - 1))
     {
         buffer[bufferPos++] = c;
         PrintBuffer();
-        return true;
     }
     else
     {
-        return false;
+        ThrowBufferException();
     }
 }
 

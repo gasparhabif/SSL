@@ -1,4 +1,5 @@
 #include "Memory.h"
+#include "ErrorHandler.h"
 
 void AddToMemory(char *id)
 {
@@ -79,25 +80,6 @@ int FindFreeSpace()
         }
     }
     return pos;
-}
-
-static void ThrowMemoryException(int e)
-{
-    printf("%s(Memory)%s ", RED_BOLD, WHITE);
-    switch (e)
-    {
-    case 1:
-        printf("No hay más espacios disponibles en memoria.\n");
-        break;
-    case 2:
-        printf("El identificador ingresado ya existe, será sobreescrito con el nuevo valor.\n");
-        break;
-    case 3:
-        printf("El identificador solicitado no existe en memoria.\n");
-        break;
-    default:
-        break;
-    }
 }
 
 void PrintMemory()

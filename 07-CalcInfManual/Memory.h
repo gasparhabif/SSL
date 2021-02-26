@@ -15,7 +15,6 @@ void SetMemoryValue(int i);
 int GetMemoryValue(char *id);
 bool CheckIdExistence(char *id);
 void PrintMemory();
-static void ThrowMemoryException(int e);
 static int FindFreeSpace();
 static int LastMemPos();
 static int GetMemoryPos(char *id);

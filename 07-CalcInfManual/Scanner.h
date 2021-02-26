@@ -23,15 +23,12 @@ enum Tokens
     OP_PARENTHESIS,
     CL_PARENTHESIS,
     ASSIGNATION,
-    LEXICAL_ERROR,
-    SINTACTICAL_ERROR,
     END
 };
 
 typedef enum Tokens Token;
 
 Token GetNextToken(void);
-bool IsIncluded(char *grammar, char c);
 void PrintToken(Token t);
 char *TokenToString(Token t);
-static Token ThrowException(bool b);
+static bool IsIncluded(char *grammar, char c);

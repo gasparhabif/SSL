@@ -6,5 +6,5 @@ char buffer[BUFFER_SIZE];
 static int bufferPos;
 
 void CleanBuffer();
-bool AddCharToBuffer(char c);
+void AddCharToBuffer(char c);
 static void PrintBuffer();

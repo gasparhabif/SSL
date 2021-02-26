@@ -1,4 +1,5 @@
 #include "Scanner.h"
+#include "ErrorHandler.h"
 
 Token GetNextToken()
 {
@@ -10,12 +11,16 @@ Token GetNextToken()
     // Its a Number
     if (IsIncluded(POSSIBLE_NUM, newChar))
     {
-        return AddCharToBuffer(newChar) ? NUMBER : ThrowException(true);
+        AddCharToBuffer(newChar);
+        return NUMBER;
     }
 
     // Its an Identificator
     if (IsIncluded(POSSIBLE_IDS, newChar))
-        return AddCharToBuffer(newChar) ? IDENTIFICATOR : ThrowException(true);
+    {
+        AddCharToBuffer(newChar);
+        return IDENTIFICATOR;
+    }
 
     // Operators
     if (IsIncluded(ADDITION_OP, newChar))
@@ -37,12 +42,8 @@ Token GetNextToken()
         return CL_PARENTHESIS;
 
     // If its not a valid token, Lexical error must be shown.
-    return ThrowException(false);
-}
-
-bool IsIncluded(char *grammar, char c)
-{
-    return strstr(grammar, (char[2]){(char)c, '\0'}) != NULL;
+    ThrowLexicalException();
+    return END;
 }
 
 void PrintToken(Token t)
@@ -77,22 +78,11 @@ char *TokenToString(Token t)
     case INITIAL:
         return "Inicial";
     default:
-        return "";
+        return "[Token no Detectado]";
     }
 }
 
-static Token ThrowException(bool isBufferError)
+static bool IsIncluded(char *grammar, char c)
 {
-    if (isBufferError)
-    {
-        printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", YELLOW_BOLD, RED);
-    }
-    else
-    {
-        printf("%s(Scanner)%s Error Léxico. Token invalido\n", MAGENTA_BOLD, RED);
-    }
-
-    CleanBuffer();
-    fseek(stdin, 0, SEEK_END);
-    return LEXICAL_ERROR;
+    return strstr(grammar, (char[2]){(char)c, '\0'}) != NULL;
 }
