@@ -1,5 +1,3 @@
-#include "Constants.h"
-
 static void ThrowError();
 bool GetError(void);
 void SetError(bool b);

@@ -1,5 +1,4 @@
 #include "Scanner.h"
-#include "ErrorHandler.h"
 
 Token GetNextToken()
 {

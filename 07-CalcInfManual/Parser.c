@@ -1,5 +1,4 @@
 #include "Parser.h"
-#include "ErrorHandler.h"
 
 void RunScan()
 {

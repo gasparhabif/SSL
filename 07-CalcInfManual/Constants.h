@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "ErrorHandler.h"
+
 // Colors
 #define WHITE "\e[0;37m"
 #define RED "\e[0;31m"

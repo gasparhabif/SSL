@@ -1,5 +1,4 @@
 #include "Buffer.h"
-#include "ErrorHandler.h"
 
 void CleanBuffer()
 {
