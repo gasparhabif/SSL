@@ -15,6 +15,3 @@
 #define BLUE_BOLD "\e[1;34m"
 #define CYAN_BOLD "\e[1;36m"
 #define RED_BOLD "\e[1;31m"
-
-#define MEMORY_SIZE 100
-#define BUFFER_SIZE 100

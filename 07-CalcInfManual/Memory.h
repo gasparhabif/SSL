@@ -1,5 +1,6 @@
 #include "Constants.h"
 
+#define MEMORY_SIZE 100
 struct MemoryBlock
 {
     char id[100];

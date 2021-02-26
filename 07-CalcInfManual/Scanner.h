@@ -1,4 +1,5 @@
 #include "Constants.h"
+#include "Buffer.h"
 
 // Possible Constants
 #define POSSIBLE_IDS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -29,14 +30,8 @@ enum Tokens
 
 typedef enum Tokens Token;
 
-char buffer[BUFFER_SIZE];
-int bufferPos;
-
 Token GetNextToken(void);
 bool IsIncluded(char *grammar, char c);
 void PrintToken(Token t);
 char *TokenToString(Token t);
-void CleanBuffer();
 static Token ThrowException(bool b);
-static bool AddCharToBuffer(char c);
-static void PrintBuffer();
