@@ -27,46 +27,75 @@ void RunScan()
 
 static void EvaluateExpresion(Token currentToken)
 {
-    switch (currentToken)
+    if (lastOperation != CL_PARENTHESIS)
     {
-    case ADDITION:
-    {
-        result += BufferValue();
-        lastOperation = ADDITION;
-        CleanBuffer();
-    }
-    break;
-    case PRODUCT:
-    {
-        result = result == 0 ? BufferValue() : result * BufferValue();
-        lastOperation = PRODUCT;
-        CleanBuffer();
-    }
-    break;
-    case ASSIGNATION:
-    {
-        AddToMemory(buffer);
-        lastOperation = ASSIGNATION;
-        CleanBuffer();
-    }
-    break;
-    case END:
-    {
-        switch (lastOperation)
+        switch (currentToken)
         {
         case ADDITION:
         {
             result += BufferValue();
+            lastOperation = ADDITION;
+            CleanBuffer();
         }
         break;
         case PRODUCT:
         {
-            result = result == 0 ? 1 : result * BufferValue();
+            result = result == 0 ? BufferValue() : result * BufferValue();
+            lastOperation = PRODUCT;
+            CleanBuffer();
         }
         break;
         case ASSIGNATION:
         {
-            SetMemoryValue(BufferValue());
+            AddToMemory(buffer);
+            lastOperation = ASSIGNATION;
+            CleanBuffer();
+        }
+        break;
+        case CL_PARENTHESIS:
+        {
+            switch (lastOperation)
+            {
+            case ADDITION:
+            {
+                result += BufferValue();
+                lastOperation = ADDITION;
+                CleanBuffer();
+            }
+            break;
+            case PRODUCT:
+            {
+                result = result == 0 ? BufferValue() : result * BufferValue();
+                lastOperation = PRODUCT;
+                CleanBuffer();
+            }
+            break;
+
+                // TODO: Falta asignacion
+
+            default:
+                break;
+            }
+            lastOperation = CL_PARENTHESIS;
+        }
+        break;
+        case END:
+        {
+            switch (lastOperation)
+            {
+            case ADDITION:
+                result += BufferValue();
+                break;
+            case PRODUCT:
+                result = result == 0 ? 1 : result * BufferValue();
+                break;
+            case ASSIGNATION:
+                SetMemoryValue(BufferValue());
+                break;
+
+            default:
+                break;
+            }
         }
         break;
 
@@ -74,10 +103,9 @@ static void EvaluateExpresion(Token currentToken)
             break;
         }
     }
-    break;
-
-    default:
-        break;
+    else
+    {
+        lastOperation = currentToken;
     }
 }
 
