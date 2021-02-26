@@ -39,6 +39,7 @@ void ThrowBufferException()
 {
     ThrowError();
     printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", YELLOW_BOLD, RED);
+    fseek(stdin, 0, SEEK_END);
 }
 
 void ThrowMemoryException(int e)
