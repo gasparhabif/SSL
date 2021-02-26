@@ -1,8 +1,11 @@
 #include "Parser.h"
 
-void RunScan(Token currentToken, Token lastToken)
+void RunScan()
 {
     printf("Ingrese la expresión a evaluar: \n");
+
+    Token currentToken = INITIAL;
+    Token lastToken = INITIAL;
 
     while (currentToken != END && !AnyKindError(currentToken))
     {
@@ -19,7 +22,7 @@ void RunScan(Token currentToken, Token lastToken)
 
     PrintResult(currentToken);
     CleanGlobalVariables();
-    RunScan(INITIAL, INITIAL);
+    RunScan();
 }
 
 static void EvaluateExpresion(Token currentToken)

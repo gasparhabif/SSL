@@ -5,7 +5,7 @@ int pCounter;
 int result;
 Token lastOperation;
 
-void RunScan(Token cT, Token lT);
+void RunScan();
 void CheckToken(Token cT, Token lT);
 static void ThrowSintacticalException(Token t, char *c);
 static bool IsTokenOperator(Token t);
