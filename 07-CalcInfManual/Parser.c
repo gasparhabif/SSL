@@ -73,7 +73,6 @@ static void PrintResult(Token currentToken)
 {
     if (!GetError())
     {
-        CleanBuffer();
         PrintMemory();
         printf("%s(Parser)", BLUE_BOLD);
         if (pCounter == 0)
