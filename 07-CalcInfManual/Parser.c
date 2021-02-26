@@ -6,6 +6,7 @@ void RunScan()
 
     Token currentToken = INITIAL;
     Token lastToken = INITIAL;
+    int lastOperation = INITIAL;
 
     while (currentToken != END && !GetError())
     {
@@ -13,9 +14,9 @@ void RunScan()
         // Lexical error detection
         if (!GetError())
         {
-            PrintToken(currentToken);
             CheckToken(currentToken, lastToken);
-            EvaluateExpresion(currentToken);
+            if (!IsTokenConstant(currentToken))
+                lastOperation = EvaluateExpresion(currentToken, lastOperation);
             lastToken = currentToken;
         }
     }
@@ -25,88 +26,47 @@ void RunScan()
     RunScan();
 }
 
-static void EvaluateExpresion(Token currentToken)
+static int EvaluateExpresion(Token currentToken, int lastOperation)
 {
-    if (lastOperation != CL_PARENTHESIS)
+    switch (currentToken)
     {
-        switch (currentToken)
+    case ADDITION:
+        result += BufferValue();
+        break;
+    case PRODUCT:
+        if (lastOperation != CL_PARENTHESIS)
+            result = result == 0 ? BufferValue() : result * BufferValue();
+        break;
+    case ASSIGNATION:
+        AddToMemory(buffer);
+        break;
+    case CL_PARENTHESIS:
+    case END:
+    {
+        switch (lastOperation)
         {
         case ADDITION:
-        {
             result += BufferValue();
-            lastOperation = ADDITION;
-            CleanBuffer();
-        }
-        break;
+            break;
         case PRODUCT:
-        {
             result = result == 0 ? BufferValue() : result * BufferValue();
-            lastOperation = PRODUCT;
-            CleanBuffer();
-        }
-        break;
+            break;
         case ASSIGNATION:
-        {
-            AddToMemory(buffer);
-            lastOperation = ASSIGNATION;
-            CleanBuffer();
-        }
-        break;
-        case CL_PARENTHESIS:
-        {
-            switch (lastOperation)
-            {
-            case ADDITION:
-            {
-                result += BufferValue();
-                lastOperation = ADDITION;
-                CleanBuffer();
-            }
+            SetMemoryValue(BufferValue());
             break;
-            case PRODUCT:
-            {
-                result = result == 0 ? BufferValue() : result * BufferValue();
-                lastOperation = PRODUCT;
-                CleanBuffer();
-            }
-            break;
-
-                // TODO: Falta asignacion
-
-            default:
-                break;
-            }
-            lastOperation = CL_PARENTHESIS;
-        }
-        break;
-        case END:
-        {
-            switch (lastOperation)
-            {
-            case ADDITION:
-                result += BufferValue();
-                break;
-            case PRODUCT:
-                result = result == 0 ? 1 : result * BufferValue();
-                break;
-            case ASSIGNATION:
-                SetMemoryValue(BufferValue());
-                break;
-
-            default:
-                break;
-            }
-        }
-        break;
 
         default:
             break;
         }
     }
-    else
-    {
-        lastOperation = currentToken;
+    break;
+
+    default:
+        break;
     }
+
+    CleanBuffer();
+    return currentToken;
 }
 
 static void PrintResult(Token currentToken)
@@ -136,7 +96,6 @@ static void CleanGlobalVariables()
     printf("\n\e[0m");
     pCounter = 0;
     result = 0;
-    lastOperation = INITIAL;
     SetError(false);
 }
 

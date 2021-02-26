@@ -3,46 +3,49 @@
 Token GetNextToken()
 {
     char newChar = getchar();
+    Token t = INITIAL;
 
     if (newChar == EOF || newChar == '\n')
-        return END;
+        t = END;
 
     // Its a Number
     if (IsIncluded(POSSIBLE_NUM, newChar))
-    {
-        AddCharToBuffer(newChar);
-        return NUMBER;
-    }
+        t = NUMBER;
 
     // Its an Identificator
     if (IsIncluded(POSSIBLE_IDS, newChar))
-    {
-        AddCharToBuffer(newChar);
-        return IDENTIFICATOR;
-    }
+        t = IDENTIFICATOR;
 
     // Operators
     if (IsIncluded(ADDITION_OP, newChar))
-        return ADDITION;
+        t = ADDITION;
 
     if (IsIncluded(PRODUCT_OP, newChar))
-        return PRODUCT;
+        t = PRODUCT;
 
     if (IsIncluded(ASSIGNATION_OP, newChar))
-        return ASSIGNATION;
+        t = ASSIGNATION;
     // End Operators
 
     // Opening Parenthesis
     if (IsIncluded(PARENTHESIS_OP, newChar))
-        return OP_PARENTHESIS;
+        t = OP_PARENTHESIS;
 
     // Closing Parenthesis
     if (IsIncluded(PARENTHESIS_CL, newChar))
-        return CL_PARENTHESIS;
+        t = CL_PARENTHESIS;
 
-    // If its not a valid token, Lexical error must be shown.
-    ThrowLexicalException();
-    return END;
+    PrintToken(t);
+
+    if (t == NUMBER || t == IDENTIFICATOR)
+        AddCharToBuffer(newChar);
+
+    // If its not a valid token the value won't be overwritten,
+    // it's value will still be INITIAL and Lexical Exception will be shown.
+    if (t == INITIAL)
+        ThrowLexicalException();
+
+    return t;
 }
 
 void PrintToken(Token t)
