@@ -7,6 +7,7 @@ static bool error = false;
 static void ThrowError()
 {
     error = true;
+    fseek(stdin, 0, SEEK_END);
     CleanBuffer();
 }
 
@@ -24,7 +25,6 @@ void ThrowLexicalException()
 {
     ThrowError();
     printf("%s(Scanner)%s Error Léxico. Token invalido\n", MAGENTA_BOLD, RED);
-    fseek(stdin, 0, SEEK_END);
 }
 
 void ThrowSintacticalException(char *currentT, char *expectedT)
@@ -39,11 +39,11 @@ void ThrowBufferException()
 {
     ThrowError();
     printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", YELLOW_BOLD, RED);
-    fseek(stdin, 0, SEEK_END);
 }
 
 void ThrowMemoryException(int e)
 {
+    ThrowError();
     printf("%s(Memory)%s ", RED_BOLD, WHITE);
     switch (e)
     {
