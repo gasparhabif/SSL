@@ -38,6 +38,7 @@ static int EvaluateExpresion(Token currentToken, int lastOperation)
             result = result == 0 ? BufferValue() : result * BufferValue();
         break;
     case ASSIGNATION:
+        openedAssignation = true;
         AddToMemory(buffer);
         break;
     case CL_PARENTHESIS:
@@ -52,11 +53,21 @@ static int EvaluateExpresion(Token currentToken, int lastOperation)
             result = result == 0 ? BufferValue() : result * BufferValue();
             break;
         case ASSIGNATION:
-            SetMemoryValue(BufferValue());
+            if (currentToken == END)
+            {
+                openedAssignation = false;
+                SetMemoryValue(BufferValue());
+            }
             break;
 
         default:
             break;
+        }
+
+        if (openedAssignation && currentToken == END)
+        {
+            SetMemoryValue(result);
+            openedAssignation = false;
         }
     }
     break;
@@ -95,6 +106,7 @@ static void CleanGlobalVariables()
     printf("\n\e[0m");
     pCounter = 0;
     result = 0;
+    openedAssignation = false;
     SetError(false);
 }
 

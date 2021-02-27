@@ -1,8 +1,9 @@
 #include "Scanner.h"
 #include "Memory.h"
 
-int pCounter;
-int result;
+static int pCounter;
+static int result;
+static bool openedAssignation = false;
 
 void RunScan();
 void CheckToken(Token cT, Token lT);
