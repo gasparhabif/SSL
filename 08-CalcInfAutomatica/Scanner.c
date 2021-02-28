@@ -733,7 +733,7 @@ case 1:
 YY_RULE_SETUP
 #line 8 "Scanner.l"
 {
-                        strcpy(buffer, yytext);
+                        AddCharToBuffer(yytext[0]);
                         return NUMBER;
                     }
 	YY_BREAK
@@ -741,7 +741,7 @@ case 2:
 YY_RULE_SETUP
 #line 12 "Scanner.l"
 {
-                        strcpy(buffer, yytext);
+                        AddCharToBuffer(yytext[0]);
                         return IDENTIFICATOR;
                     }
 	YY_BREAK
@@ -1805,7 +1805,8 @@ Token GetNextToken()
     t = yylex();
     // If its not a valid token the value won't be overwritten,
     // it's value will still be INITIAL and Lexical Exception will be shown.
-    if(t != INITIAL) PrintToken(t);
+    // if(t != INITIAL) 
+    PrintToken(t);
     return t;
 }
 

@@ -6,11 +6,11 @@
 %%
 
 [0-9]+              {
-                        strcpy(buffer, yytext);
+                        AddCharToBuffer(yytext[0]);
                         return NUMBER;
                     }
 [a-zA-Z][a-zA-Z]*   {
-                        strcpy(buffer, yytext);
+                        AddCharToBuffer(yytext[0]);
                         return IDENTIFICATOR;
                     }
 
@@ -37,7 +37,8 @@ Token GetNextToken()
     t = yylex();
     // If its not a valid token the value won't be overwritten,
     // it's value will still be INITIAL and Lexical Exception will be shown.
-    if(t != INITIAL) PrintToken(t);
+    // if(t != INITIAL) 
+    PrintToken(t);
     return t;
 }
 
