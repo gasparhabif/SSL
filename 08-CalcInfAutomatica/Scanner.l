@@ -1,0 +1,78 @@
+%{
+    #include "Scanner.h"
+%}
+
+%option noyywrap
+%%
+
+[0-9]+              {
+                        strcpy(buffer, yytext);
+                        return NUMBER;
+                    }
+[a-zA-Z][a-zA-Z]*   {
+                        strcpy(buffer, yytext);
+                        return IDENTIFICATOR;
+                    }
+
+\(                  return OP_PARENTHESIS;
+\)                  return CL_PARENTHESIS;
+\+                  return ADDITION;
+\*                  return PRODUCT;
+\=                  return ASSIGNATION;
+\\n                 return END;
+<<EOF>>             return END;
+[ ]+ ;
+.                   {
+                        ThrowLexicalException();
+                        return INITIAL;
+                    }
+%%
+
+
+// Funciones Publicas
+
+Token GetNextToken() 
+{
+    Token t = INITIAL;
+    t = yylex();
+    // If its not a valid token the value won't be overwritten,
+    // it's value will still be INITIAL and Lexical Exception will be shown.
+    if(t != INITIAL) PrintToken(t);
+    return t;
+}
+
+void PrintToken(Token t)
+{
+    if (t != END && t != INITIAL)
+    {
+        char *tokenValue = TokenToString(t);
+        printf("%s(Scanner)%s Token encontrado: %s%s \n", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
+    }
+}
+
+char *TokenToString(Token t)
+{
+    switch (t)
+    {
+    case IDENTIFICATOR:
+        return "Identificador";
+    case NUMBER:
+        return "Número";
+    case ADDITION:
+        return "Adición [+]";
+    case PRODUCT:
+        return "Producto [*]";
+    case OP_PARENTHESIS:
+        return "Apertura de Paréntesis '('";
+    case CL_PARENTHESIS:
+        return "Cierre de Paréntesis ')'";
+    case END:
+        return "Enter (EOF)";
+    case ASSIGNATION:
+        return "Asignación [=]";
+    case INITIAL:
+        return "Inicial";
+    default:
+        return "[Token no Detectado]";
+    }
+}
