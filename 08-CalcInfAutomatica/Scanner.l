@@ -17,11 +17,11 @@ IDS     [a-zA-Z][a-zA-Z]*
                         return IDENTIFICATOR;
                     }
 
-"("                  return OP_PARENTHESIS;
-")"                  return CL_PARENTHESIS;
-"+"                  return ADDITION;
-"*"                  return PRODUCT;
-"="                  return ASSIGNATION;
+"("                 return OP_PARENTHESIS;
+")"                 return CL_PARENTHESIS;
+"+"                 return ADDITION;
+"*"                 return PRODUCT;
+"="                 return ASSIGNATION;
 "\n"                return END;
 .                   {
                         ThrowLexicalException();
