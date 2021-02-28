@@ -31,4 +31,3 @@ typedef enum Tokens Token;
 Token GetNextToken(void);
 void PrintToken(Token t);
 char *TokenToString(Token t);
-static bool IsIncluded(char *grammar, char c);

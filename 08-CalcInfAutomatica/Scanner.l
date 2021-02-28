@@ -19,9 +19,7 @@
 \+                  return ADDITION;
 \*                  return PRODUCT;
 \=                  return ASSIGNATION;
-\\n                 return END;
-<<EOF>>             return END;
-[ ]+ ;
+"\n"                return END;
 .                   {
                         ThrowLexicalException();
                         return INITIAL;
