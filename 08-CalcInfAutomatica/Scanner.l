@@ -2,23 +2,26 @@
     #include "Scanner.h"
 %}
 
+NUMS    [0-9]
+IDS     [a-zA-Z][a-zA-Z]*
+
 %option noyywrap
 %%
 
-[0-9]+              {
-                        AddCharToBuffer(yytext[0]);
+{NUMS}+              {
+                        AddStringToBuffer(yytext);
                         return NUMBER;
                     }
-[a-zA-Z][a-zA-Z]*   {
-                        AddCharToBuffer(yytext[0]);
+{IDS}               {
+                        AddStringToBuffer(yytext);
                         return IDENTIFICATOR;
                     }
 
-\(                  return OP_PARENTHESIS;
-\)                  return CL_PARENTHESIS;
-\+                  return ADDITION;
-\*                  return PRODUCT;
-\=                  return ASSIGNATION;
+"("                  return OP_PARENTHESIS;
+")"                  return CL_PARENTHESIS;
+"+"                  return ADDITION;
+"*"                  return PRODUCT;
+"="                  return ASSIGNATION;
 "\n"                return END;
 .                   {
                         ThrowLexicalException();

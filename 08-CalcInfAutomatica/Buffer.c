@@ -11,12 +11,11 @@ void CleanBuffer()
     printf("%s(Buffer)%s Limpiado\n", YELLOW_BOLD, WHITE);
 }
 
-void AddCharToBuffer(char c)
+void AddStringToBuffer(char *str)
 {
-
     if (bufferPos < (BUFFER_SIZE - 1))
     {
-        buffer[bufferPos++] = c;
+        strcpy(buffer, str);
         PrintBuffer();
     }
     else

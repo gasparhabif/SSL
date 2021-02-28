@@ -640,7 +640,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 6 "Scanner.l"
+#line 9 "Scanner.l"
 
 
 #line 647 "<stdout>"
@@ -728,54 +728,54 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "Scanner.l"
+#line 11 "Scanner.l"
 {
-                        AddCharToBuffer(yytext[0]);
+                        AddStringToBuffer(yytext);
                         return NUMBER;
                     }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 12 "Scanner.l"
+#line 15 "Scanner.l"
 {
-                        AddCharToBuffer(yytext[0]);
+                        AddStringToBuffer(yytext);
                         return IDENTIFICATOR;
                     }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 17 "Scanner.l"
+#line 20 "Scanner.l"
 return OP_PARENTHESIS;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 18 "Scanner.l"
+#line 21 "Scanner.l"
 return CL_PARENTHESIS;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 19 "Scanner.l"
+#line 22 "Scanner.l"
 return ADDITION;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 20 "Scanner.l"
+#line 23 "Scanner.l"
 return PRODUCT;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 21 "Scanner.l"
+#line 24 "Scanner.l"
 return ASSIGNATION;
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 22 "Scanner.l"
+#line 25 "Scanner.l"
 return END;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 23 "Scanner.l"
+#line 26 "Scanner.l"
 {
                         ThrowLexicalException();
                         return INITIAL;
@@ -783,7 +783,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 27 "Scanner.l"
+#line 30 "Scanner.l"
 ECHO;
 	YY_BREAK
 #line 790 "<stdout>"
@@ -1783,7 +1783,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 27 "Scanner.l"
+#line 30 "Scanner.l"
 
 
 
