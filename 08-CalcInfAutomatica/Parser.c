@@ -80,7 +80,7 @@ static int EvaluateExpresion(Token currentToken, int lastOperation)
     return currentToken;
 }
 
-static void PrintResult(Token currentToken)
+static void PrintResult()
 {
     if (!GetError())
     {
