@@ -43,10 +43,9 @@ sentenceList: sentence
             | sentenceList sentence
             ;
 
-sentence: IDENTIFICATOR ASSIGNATION expresion { AddToMemory($1); }
+sentence: IDENTIFICATOR ASSIGNATION expresion { AddMemoryBlock($1, $3); }
         | expresion { PrintResult(); }
         ;
-
 expresion: term { $$ = $1; }
          | expresion ADDITION term { $$ = $1 + $3; }
          ;
@@ -61,6 +60,8 @@ factor: IDENTIFICATOR { $$ = GetMemoryValue($1); }
       ;
 
 %%
+
+
 
 void yyerror(char const *s) {
     ThrowSintacticalException(s);
