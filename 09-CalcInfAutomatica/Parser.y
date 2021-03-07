@@ -1,7 +1,7 @@
 %{
     #include "Parser.h"
     
-    static void PrintResult();
+    static void PrintResult(int result);
     static int yylex(void);
     static void yyerror(char const *s);
 %}
@@ -13,14 +13,13 @@
 }
 
 %token <number> NUMBER
-%token <string> INITIAL
 %token <string> IDENTIFICATOR
 %token <string> ADDITION
 %token <string> PRODUCT
 %token <string> OP_PARENTHESIS
 %token <string> CL_PARENTHESIS
 %token <string> ASSIGNATION
-%token <string> END
+%token <string> END 0
 
 %type <string> runScan
 %type <string> program
@@ -31,20 +30,18 @@
 %type <number> factor
 %start runScan
 
-
-
 %%
 
 runScan: program;
 
-program: INITIAL sentenceList END;
+program: sentenceList END; 
 
 sentenceList: sentence
-            | sentenceList sentence
+            | sentenceList sentence            
             ;
 
 sentence: IDENTIFICATOR ASSIGNATION expresion { AddMemoryBlock($1, $3); }
-        | expresion { PrintResult(); }
+        | expresion { PrintResult($1); }
         ;
 expresion: term { $$ = $1; }
          | expresion ADDITION term { $$ = $1 + $3; }
@@ -75,19 +72,17 @@ void RunScan() {
     printf("Ingrese la expresión a evaluar: \n");
     switch(yyparse()){
     case 0:
-      return;
     case 1:
-      return;
+      break;
     default:
       ThrowSintacticalException("Error indefinido");
-      return;
+      break;
     }
-    PrintResult();
     CleanGlobalVariables();
     RunScan();
 }
 
-static void PrintResult()
+static void PrintResult(int result)
 {
     if (!GetError())
     {
@@ -102,6 +97,5 @@ static void CleanGlobalVariables()
 {
     // Reset console colors.
     printf("\n\e[0m");
-    result = 0;
     SetError(false);
 }

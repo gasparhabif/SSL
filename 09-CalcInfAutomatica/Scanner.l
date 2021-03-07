@@ -9,11 +9,11 @@ IDS     [a-zA-Z][a-zA-Z]*
 %%
 
 {NUMS}+              {
-                        AddStringToBuffer(yytext);
+                        yylval.number=atoi(yytext);
                         return NUMBER;
                     }
 {IDS}               {
-                        AddStringToBuffer(yytext);
+                        strcpy(yylval.string, yytext);
                         return IDENTIFICATOR;
                     }
 
@@ -23,6 +23,7 @@ IDS     [a-zA-Z][a-zA-Z]*
 "*"                 return PRODUCT;
 "="                 return ASSIGNATION;
 "\n"                return END;
+[ ]+
 .                   {
                         ThrowLexicalException();
                         return INITIAL;
@@ -34,18 +35,16 @@ IDS     [a-zA-Z][a-zA-Z]*
 
 int GetNextToken() 
 {
-    int t = INITIAL;
+    // -1 is not a valid token => if not replaced token won't be shown.
+    int t = -1;
     t = yylex();
-    // If its not a valid token the value won't be overwritten,
-    // it's value will still be INITIAL and Lexical Exception will be shown.
-    // if(t != INITIAL) 
     PrintToken(t);
     return t;
 }
 
 void PrintToken(int t)
 {
-    if (t != END && t != INITIAL)
+    if (t != END && t != -1)
     {
         char *tokenValue = TokenToString(t);
         printf("%s(Scanner)%s Token encontrado: %s%s \n", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
@@ -72,8 +71,6 @@ char *TokenToString(int t)
         return "Enter (EOF)";
     case ASSIGNATION:
         return "Asignación [=]";
-    case INITIAL:
-        return "Inicial";
     default:
         return "[Token no Detectado]";
     }

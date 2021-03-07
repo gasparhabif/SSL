@@ -39,27 +39,25 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
+     END = 0,
      NUMBER = 258,
-     INITIAL = 259,
-     IDENTIFICATOR = 260,
-     ADDITION = 261,
-     PRODUCT = 262,
-     OP_PARENTHESIS = 263,
-     CL_PARENTHESIS = 264,
-     ASSIGNATION = 265,
-     END = 266
+     IDENTIFICATOR = 259,
+     ADDITION = 260,
+     PRODUCT = 261,
+     OP_PARENTHESIS = 262,
+     CL_PARENTHESIS = 263,
+     ASSIGNATION = 264
    };
 #endif
 /* Tokens.  */
+#define END 0
 #define NUMBER 258
-#define INITIAL 259
-#define IDENTIFICATOR 260
-#define ADDITION 261
-#define PRODUCT 262
-#define OP_PARENTHESIS 263
-#define CL_PARENTHESIS 264
-#define ASSIGNATION 265
-#define END 266
+#define IDENTIFICATOR 259
+#define ADDITION 260
+#define PRODUCT 261
+#define OP_PARENTHESIS 262
+#define CL_PARENTHESIS 263
+#define ASSIGNATION 264
 
 
 
@@ -72,7 +70,7 @@ typedef union YYSTYPE
   char* string;
 }
 /* Line 1529 of yacc.c.  */
-#line 76 "Token.h"
+#line 74 "Token.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
