@@ -1,4 +1,4 @@
-#include "Buffer.h"
+#include "Constants.h"
 
 // 0 (False) for No Error Detected
 // 1 (True) for Detected Error
@@ -8,7 +8,6 @@ static void ThrowError()
 {
     error = true;
     fseek(stdin, 0, SEEK_END);
-    CleanBuffer();
 }
 
 void SetError(bool b)
@@ -31,12 +30,6 @@ void ThrowSintacticalException(char const *ex)
 {
     ThrowError();
     printf("%s(Parser) %sError Sintáctico: %s\n", BLUE_BOLD, RED, ex);
-}
-
-void ThrowBufferException()
-{
-    ThrowError();
-    printf("%s(Buffer)%s El lexema supera la cantidad de caracteres validos para el Buffer ", YELLOW_BOLD, RED);
 }
 
 void ThrowMemoryException(int e)

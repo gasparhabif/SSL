@@ -1,5 +1,4 @@
 #include "Constants.h"
-#include "Buffer.h"
 #include "Token.h"
 
 int GetNextToken(void);
