@@ -122,7 +122,7 @@ typedef union YYSTYPE
 #line 10 "Parser.y"
 {
   int number;
-  char* string;
+  char string[100];
 }
 /* Line 193 of yacc.c.  */
 #line 129 "Parser.c"
@@ -1337,7 +1337,7 @@ yyreduce:
     {
         case 6:
 #line 43 "Parser.y"
-    { AddMemoryBlock((yyvsp[(1) - (3)].string), (yyvsp[(3) - (3)].number)); ;}
+    { AddMemoryBlock((yyvsp[(1) - (3)].string), (yyvsp[(3) - (3)].number)); PrintMemory(); ;}
     break;
 
   case 7:
@@ -1637,6 +1637,7 @@ static void PrintResult(int result)
 static void CleanGlobalVariables()
 {
     // Reset console colors.
+    fseek(stdin, 0, SEEK_END);
     printf("\n\e[0m");
     SetError(false);
 }

@@ -13,7 +13,7 @@ IDS     [a-zA-Z][a-zA-Z]*
                         return NUMBER;
                     }
 {IDS}               {
-                        strcpy(yylval.string, yytext);
+                        strcpy(yylval.string, yytext);   
                         return IDENTIFICATOR;
                     }
 
@@ -26,7 +26,7 @@ IDS     [a-zA-Z][a-zA-Z]*
 [ ]+
 .                   {
                         ThrowLexicalException();
-                        return INITIAL;
+                        return -1;
                     }
 %%
 
@@ -35,10 +35,12 @@ IDS     [a-zA-Z][a-zA-Z]*
 
 int GetNextToken() 
 {
-    // -1 is not a valid token => if not replaced token won't be shown.
+    // -1 is not a valid token => if not overwritten by yylex() token won't be shown.
     int t = -1;
-    t = yylex();
-    PrintToken(t);
+    if(!GetError()){
+        t = yylex();
+        PrintToken(t);
+    }
     return t;
 }
 

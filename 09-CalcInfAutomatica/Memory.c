@@ -13,6 +13,7 @@ void AddMemoryBlock(char *id, int value)
 
 static void SetMemoryBlock(char *id, int value, int pos)
 {
+
     struct MemoryBlock memBlock;
     strcpy(memBlock.id, id);
     memBlock.value = value;

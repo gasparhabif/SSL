@@ -9,7 +9,7 @@
 %union 
 {
   int number;
-  char* string;
+  char string[100];
 }
 
 %token <number> NUMBER
@@ -40,7 +40,7 @@ sentenceList: sentence
             | sentenceList sentence            
             ;
 
-sentence: IDENTIFICATOR ASSIGNATION expresion { AddMemoryBlock($1, $3); }
+sentence: IDENTIFICATOR ASSIGNATION expresion { AddMemoryBlock($1, $3); PrintMemory(); }
         | expresion { PrintResult($1); }
         ;
 expresion: term { $$ = $1; }
@@ -96,6 +96,7 @@ static void PrintResult(int result)
 static void CleanGlobalVariables()
 {
     // Reset console colors.
+    fseek(stdin, 0, SEEK_END);
     printf("\n\e[0m");
     SetError(false);
 }

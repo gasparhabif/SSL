@@ -67,7 +67,7 @@ typedef union YYSTYPE
 #line 10 "Parser.y"
 {
   int number;
-  char* string;
+  char string[100];
 }
 /* Line 1529 of yacc.c.  */
 #line 74 "Token.h"

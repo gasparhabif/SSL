@@ -739,7 +739,7 @@ case 2:
 YY_RULE_SETUP
 #line 15 "Scanner.l"
 {
-                        strcpy(yylval.string, yytext);
+                        strcpy(yylval.string, yytext);   
                         return IDENTIFICATOR;
                     }
 	YY_BREAK
@@ -784,7 +784,7 @@ YY_RULE_SETUP
 #line 27 "Scanner.l"
 {
                         ThrowLexicalException();
-                        return INITIAL;
+                        return -1;
                     }
 	YY_BREAK
 case 11:
@@ -1798,10 +1798,12 @@ void yyfree (void * ptr )
 
 int GetNextToken() 
 {
-    // -1 is not a valid token => if not replaced token won't be shown.
+    // -1 is not a valid token => if not overwritten by yylex() token won't be shown.
     int t = -1;
-    t = yylex();
-    PrintToken(t);
+    if(!GetError()){
+        t = yylex();
+        PrintToken(t);
+    }
     return t;
 }
 
