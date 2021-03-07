@@ -97,6 +97,7 @@
     static void PrintResult(int result);
     static int yylex(void);
     static void yyerror(char const *s);
+    void CleanYylex();
 
 
 /* Enabling traces.  */
@@ -119,13 +120,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 10 "Parser.y"
+#line 11 "Parser.y"
 {
   int number;
   char string[100];
 }
 /* Line 193 of yacc.c.  */
-#line 129 "Parser.c"
+#line 130 "Parser.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -138,7 +139,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 142 "Parser.c"
+#line 143 "Parser.c"
 
 #ifdef short
 # undef short
@@ -424,8 +425,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    35,    35,    37,    39,    40,    43,    44,    46,    47,
-      50,    51,    54,    55,    56
+       0,    36,    36,    38,    40,    41,    44,    45,    47,    48,
+      51,    52,    55,    56,    57
 };
 #endif
 
@@ -1336,53 +1337,53 @@ yyreduce:
   switch (yyn)
     {
         case 6:
-#line 43 "Parser.y"
+#line 44 "Parser.y"
     { AddMemoryBlock((yyvsp[(1) - (3)].string), (yyvsp[(3) - (3)].number)); ;}
     break;
 
   case 7:
-#line 44 "Parser.y"
+#line 45 "Parser.y"
     { PrintResult((yyvsp[(1) - (1)].number)); ;}
     break;
 
   case 8:
-#line 46 "Parser.y"
+#line 47 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (1)].number); ;}
     break;
 
   case 9:
-#line 47 "Parser.y"
+#line 48 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (3)].number) + (yyvsp[(3) - (3)].number); ;}
     break;
 
   case 10:
-#line 50 "Parser.y"
+#line 51 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (1)].number); ;}
     break;
 
   case 11:
-#line 51 "Parser.y"
+#line 52 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (3)].number) * (yyvsp[(3) - (3)].number); ;}
     break;
 
   case 12:
-#line 54 "Parser.y"
+#line 55 "Parser.y"
     { (yyval.number) = GetMemoryValue((yyvsp[(1) - (1)].string)); ;}
     break;
 
   case 13:
-#line 55 "Parser.y"
+#line 56 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (1)].number); ;}
     break;
 
   case 14:
-#line 56 "Parser.y"
+#line 57 "Parser.y"
     { (yyval.number) = (yyvsp[(2) - (3)].number); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1386 "Parser.c"
+#line 1387 "Parser.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1596,7 +1597,7 @@ yyreturn:
 }
 
 
-#line 59 "Parser.y"
+#line 60 "Parser.y"
 
 
 
@@ -1616,7 +1617,7 @@ void RunScan() {
     case 1:
       break;
     default:
-      ThrowSintacticalException("Error indefinido");
+      ThrowSintacticalException("Indefinido");
       break;
     }
     CleanGlobalVariables();
@@ -1637,7 +1638,13 @@ static void PrintResult(int result)
 static void CleanGlobalVariables()
 {
     // Reset console colors.
-    fseek(stdin, 0, SEEK_END);
     printf("\n\e[0m");
     SetError(false);
+}
+
+void CleanYylex() {
+    int t = -1;
+    while (t != 0)
+      t = yylex();
+    CleanGlobalVariables();
 }

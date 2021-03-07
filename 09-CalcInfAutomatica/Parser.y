@@ -4,6 +4,7 @@
     static void PrintResult(int result);
     static int yylex(void);
     static void yyerror(char const *s);
+    void CleanYylex();
 %}
 
 %union 
@@ -75,7 +76,7 @@ void RunScan() {
     case 1:
       break;
     default:
-      ThrowSintacticalException("Error indefinido");
+      ThrowSintacticalException("Indefinido");
       break;
     }
     CleanGlobalVariables();
@@ -96,7 +97,13 @@ static void PrintResult(int result)
 static void CleanGlobalVariables()
 {
     // Reset console colors.
-    fseek(stdin, 0, SEEK_END);
     printf("\n\e[0m");
     SetError(false);
+}
+
+void CleanYylex() {
+    int t = -1;
+    while (t != 0)
+      t = yylex();
+    CleanGlobalVariables();
 }

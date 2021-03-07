@@ -1,5 +1,5 @@
 #include "Constants.h"
-
+#include "Parser.h"
 // 0 (False) for No Error Detected
 // 1 (True) for Detected Error
 static bool error = false;
@@ -7,7 +7,8 @@ static bool error = false;
 static void ThrowError()
 {
     error = true;
-    fseek(stdin, 0, SEEK_END);
+    CleanYylex();
+    RunScan();
 }
 
 void SetError(bool b)
@@ -22,20 +23,19 @@ bool GetError()
 
 void ThrowLexicalException()
 {
-    ThrowError();
     printf("%s(Scanner)%s Error Léxico. Token invalido\n", MAGENTA_BOLD, RED);
+    ThrowError();
 }
 
 void ThrowSintacticalException(char const *ex)
 {
-    ThrowError();
     printf("%s(Parser) %sError Sintáctico: %s\n", BLUE_BOLD, RED, ex);
+    ThrowError();
 }
 
 void ThrowMemoryException(int e)
 {
-    ThrowError();
-    printf("%s(Memory)%s ", RED_BOLD, WHITE);
+    printf("%s(Memory)%s Error: ", RED_BOLD, RED);
     switch (e)
     {
     case 1:
@@ -50,4 +50,5 @@ void ThrowMemoryException(int e)
     default:
         break;
     }
+    ThrowError();
 }

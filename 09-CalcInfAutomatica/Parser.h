@@ -4,3 +4,4 @@
 void RunScan();
 static void CleanGlobalVariables();
 static void PrintResult(int result);
+void CleanYylex();

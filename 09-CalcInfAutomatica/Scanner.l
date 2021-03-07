@@ -37,16 +37,14 @@ int GetNextToken()
 {
     // -1 is not a valid token => if not overwritten by yylex() token won't be shown.
     int t = -1;
-    if(!GetError()){
-        t = yylex();
-        PrintToken(t);
-    }
+    t = yylex();
+    PrintToken(t);
     return t;
 }
 
 void PrintToken(int t)
 {
-    if (t != END && t != -1)
+    if (t != END && t != -1 && !GetError())
     {
         char *tokenValue = TokenToString(t);
         printf("%s(Scanner)%s Token encontrado: %s%s \n", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
