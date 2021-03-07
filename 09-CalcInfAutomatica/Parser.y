@@ -44,6 +44,7 @@ sentenceList: sentence
 sentence: IDENTIFICATOR ASSIGNATION expresion { AddMemoryBlock($1, $3); }
         | expresion { PrintResult($1); }
         ;
+        
 expresion: term { $$ = $1; }
          | expresion ADDITION term { $$ = $1 + $3; }
          ;
@@ -103,6 +104,7 @@ static void CleanGlobalVariables()
 
 void CleanYylex() {
     int t = -1;
+    // Get tokens and ignore it's result until END is recieved 
     while (t != 0)
       t = yylex();
     CleanGlobalVariables();

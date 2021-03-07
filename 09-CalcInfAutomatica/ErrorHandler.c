@@ -1,5 +1,6 @@
 #include "Constants.h"
 #include "Parser.h"
+
 // 0 (False) for No Error Detected
 // 1 (True) for Detected Error
 static bool error = false;
