@@ -9,6 +9,7 @@ void AddMemoryBlock(char *id, int value)
         pos = FindFreeSpace();
 
     SetMemoryBlock(id, value, pos);
+    PrintMemory();
 }
 
 static void SetMemoryBlock(char *id, int value, int pos)
@@ -48,7 +49,10 @@ int GetMemoryValue(char *id)
     {
         struct MemoryBlock mem = memory[i];
         if (!strcmp(mem.id, id))
+        {
+            printf("%s(Memory)%s Identificador reconocido: %s junto a su valor: %i\n", RED_BOLD, WHITE, id, mem.value);
             return mem.value;
+        }
     }
     ThrowMemoryException(3);
     return -1;

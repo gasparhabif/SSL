@@ -40,7 +40,7 @@ sentenceList: sentence
             | sentenceList sentence            
             ;
 
-sentence: IDENTIFICATOR ASSIGNATION expresion { AddMemoryBlock($1, $3); PrintMemory(); }
+sentence: IDENTIFICATOR ASSIGNATION expresion { AddMemoryBlock($1, $3); }
         | expresion { PrintResult($1); }
         ;
 expresion: term { $$ = $1; }

@@ -1337,7 +1337,7 @@ yyreduce:
     {
         case 6:
 #line 43 "Parser.y"
-    { AddMemoryBlock((yyvsp[(1) - (3)].string), (yyvsp[(3) - (3)].number)); PrintMemory(); ;}
+    { AddMemoryBlock((yyvsp[(1) - (3)].string), (yyvsp[(3) - (3)].number)); ;}
     break;
 
   case 7:
