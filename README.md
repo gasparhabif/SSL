@@ -5,5 +5,5 @@
   <li><strong>Año: </strong>2020 (Anual)</li>
   <li><strong>Legajo:</strong> 1680079</li>
   <li><strong>Apellido:</strong> Habif</li>
-    <li><strong>Nombre:</strong> Gaspar</li>
+  <li><strong>Nombre:</strong> Gaspar</li>
 </ul>
