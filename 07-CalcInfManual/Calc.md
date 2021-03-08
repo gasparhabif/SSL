@@ -7,7 +7,7 @@ El diseño a nivel léxico está dado por una máquina de estado junto a una gra
 | -------------- | ---------- | ----------------------------------------------------------------------------------- |
 | INITIAL        |            | Indica el comienzo del programa.                                                    |
 | IDENTIFICATOR  | [A-Za-z]   | Utilizado para representar un carácter de los identificadores de variables.         |
-| NUMBER         | [0-9]      | Utilizado para representar un número natural con representación literal en base 10. |
+| NUMBER         | [0-9]      | Utilizado para representar un número natural con representación literal en base 10. |
 | ADDITION       | +          | Utilizado para representar la adición.                                              |
 | PRODUCT        | *          | Utilizado para representar la multiplicación.                                       |
 | OP_PARENTHESIS | (          | Utilizado para representar el paréntesis de apertura.                               |
@@ -32,22 +32,22 @@ Por otra parte para poder analizar sintácticamente las expresiones de manera co
 
 ### GCI
 
-    programa 		: INITIAL sentenceList END
+    programa 	: INITIAL sentenceList END
     
-    sentenceList 	: sentence { sentence }
+    sentenceList	: sentence { sentence }
     
-    sentence		: IDENTIFICATOR ASSIGNATION expresion
-				    | expresion
+    sentence	: IDENTIFICATOR ASSIGNATION expresion
+    		| expresion
 				    
-    expresion		: term
-				    | expresion ADITION term
+    expresion	: term
+    		| expresion ADITION term
 				    
-    term			: factor
-					| term PRODUCT factor
+    term		: factor
+    		| term PRODUCT factor
 
-	factor			: IDENTIFICATOR
-					| NUMBER
-					| OP_PARENTHESIS expresion CL_PARENTHESIS
+	factor		: IDENTIFICATOR
+			| NUMBER
+			| OP_PARENTHESIS expresion CL_PARENTHESIS
  
 ## Implementación a Nivel Sintáctico
 
