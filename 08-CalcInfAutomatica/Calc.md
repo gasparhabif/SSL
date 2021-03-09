@@ -31,10 +31,10 @@ Para mantener el funcionamiento del Buffer y de la Memoria se procede a copiar e
 
 ## Diseño a Nivel Sintáctico
 
-Las expresiones válidas a nivel sintáctico serán aquellas que respondan a la **gramática independiente del contexto (GCI)** previamente generada. 
+Las expresiones válidas a nivel sintáctico serán aquellas que respondan a la **gramática independiente del contexto (CFG)** previamente generada. 
 Por otra parte para poder analizar sintácticamente las expresiones de manera correcta se usa el análisis de tipo **Descendente Recursivo** donde se van reduciendo las expresiones para poder obtener el valor final. 
 
-### GCI
+### CFG
 
     programa 	: INITIAL sentenceList END
     
