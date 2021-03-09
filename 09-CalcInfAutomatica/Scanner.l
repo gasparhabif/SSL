@@ -3,16 +3,16 @@
 %}
 
 NUMS    [0-9]
-IDS     [a-zA-Z][a-zA-Z]*
+IDS     [a-zA-Z]
 
 %option noyywrap
 %%
 
-{NUMS}+              {
+{NUMS}+             {
                         yylval.number=atoi(yytext);
                         return NUMBER;
                     }
-{IDS}               {
+{IDS}+              {
                         strcpy(yylval.string, yytext);   
                         return IDENTIFICATOR;
                     }

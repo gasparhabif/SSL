@@ -3,16 +3,16 @@
 %}
 
 NUMS    [0-9]
-IDS     [a-zA-Z][a-zA-Z]*
+IDS     [a-zA-Z]
 
 %option noyywrap
 %%
 
-{NUMS}+              {
+{NUMS}+             {
                         AddStringToBuffer(yytext);
                         return NUMBER;
                     }
-{IDS}               {
+{IDS}+              {
                         AddStringToBuffer(yytext);
                         return IDENTIFICATOR;
                     }
