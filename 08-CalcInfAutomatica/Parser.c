@@ -4,11 +4,16 @@ void RunProgram()
 {
     printf("Ingrese la expresión a evaluar: \n");
 
-    Token currentToken = INITIAL;
-    Token lastToken = INITIAL;
-    int lastOperation = INITIAL;
+    Program(INITIAL, INITIAL, INITIAL);
 
-    while (currentToken != END && !GetError())
+    PrintResult();
+    CleanGlobalVariables();
+    RunProgram();
+}
+
+static void Program(Token currentToken, Token lastToken, int lastOperation)
+{
+    if (currentToken != END && !GetError())
     {
         currentToken = GetNextToken();
         // Lexical error detection
@@ -19,11 +24,8 @@ void RunProgram()
                 lastOperation = EvaluateExpresion(currentToken, lastOperation);
             lastToken = currentToken;
         }
+        Program(currentToken, lastToken, lastOperation);
     }
-
-    PrintResult(currentToken);
-    CleanGlobalVariables();
-    RunProgram();
 }
 
 static int EvaluateExpresion(Token currentToken, int lastOperation)
@@ -78,36 +80,6 @@ static int EvaluateExpresion(Token currentToken, int lastOperation)
 
     CleanBuffer();
     return currentToken;
-}
-
-static void PrintResult()
-{
-    if (!GetError())
-    {
-        PrintMemory();
-        printf("%s(Parser)", BLUE_BOLD);
-        if (pCounter == 0)
-        {
-            printf("%s La expresión es Válida\n", GREEN);
-            printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE_BOLD, CYAN_BOLD, result);
-        }
-        else
-        {
-            SetError(true);
-            printf("%s Error Sintáctico\n", RED);
-            printf("\t-> Paréntesis desbalanceados\n");
-        }
-    }
-}
-
-static void CleanGlobalVariables()
-{
-    // Reset console colors.
-    printf("\n\e[0m");
-    pCounter = 0;
-    result = 0;
-    openedAssignation = false;
-    SetError(false);
 }
 
 void CheckToken(Token currentToken, Token lastToken)
@@ -181,4 +153,34 @@ static bool IsTokenOperator(Token t)
 static bool IsTokenConstant(Token t)
 {
     return t == NUMBER || t == IDENTIFICATOR;
+}
+
+static void PrintResult()
+{
+    if (!GetError())
+    {
+        PrintMemory();
+        printf("%s(Parser)", BLUE_BOLD);
+        if (pCounter == 0)
+        {
+            printf("%s La expresión es Válida\n", GREEN);
+            printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE_BOLD, CYAN_BOLD, result);
+        }
+        else
+        {
+            SetError(true);
+            printf("%s Error Sintáctico\n", RED);
+            printf("\t-> Paréntesis desbalanceados\n");
+        }
+    }
+}
+
+static void CleanGlobalVariables()
+{
+    // Reset console colors.
+    printf("\n\e[0m");
+    pCounter = 0;
+    result = 0;
+    openedAssignation = false;
+    SetError(false);
 }

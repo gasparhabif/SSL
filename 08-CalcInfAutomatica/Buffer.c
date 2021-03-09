@@ -27,11 +27,7 @@ void AddStringToBuffer(char *str)
 
 static void PrintBuffer()
 {
-    printf("%s(Buffer)%s Actualmente almacenado en Buffer: ", YELLOW_BOLD, WHITE);
-
-    for (int i = 0; i <= bufferPos; i++)
-        printf("%c", buffer[i]);
-    printf("\n");
+    printf("%s(Buffer)%s Actualmente almacenado en Buffer: %s\n", YELLOW_BOLD, WHITE, buffer);
 }
 
 int BufferValue()
