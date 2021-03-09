@@ -10,6 +10,6 @@ static void Program(Token ct, Token lT, int lO);
 void CheckToken(Token cT, Token lT);
 static bool IsTokenOperator(Token t);
 static bool IsTokenConstant(Token t);
-static void CleanGlobalVariables();
-static void PrintResult();
 static int EvaluateExpresion(Token t, int i);
+static void PrintResult();
+static void CleanGlobalVariables();

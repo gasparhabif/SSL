@@ -13,14 +13,7 @@ void Run_Scan()
     lastToken = INITIAL;
     pCounter = 0;
 
-    while (CurrentToken != END && CurrentToken != ERROR)
-    {
-        CurrentToken = GetNextToken();
-        PrintToken(CurrentToken);
-        CheckToken(CurrentToken);
-
-        lastToken = CurrentToken;
-    }
+    Program();
 
     if (CurrentToken != ERROR)
     {
@@ -38,6 +31,19 @@ void Run_Scan()
     else
     {
         exit(1);
+    }
+}
+
+static void Program()
+{
+    if (CurrentToken != END && CurrentToken != ERROR)
+    {
+        CurrentToken = GetNextToken();
+        PrintToken(CurrentToken);
+        CheckToken(CurrentToken);
+
+        lastToken = CurrentToken;
+        Program();
     }
 }
 

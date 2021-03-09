@@ -82,36 +82,6 @@ static int EvaluateExpresion(Token currentToken, int lastOperation)
     return currentToken;
 }
 
-static void PrintResult()
-{
-    if (!GetError())
-    {
-        PrintMemory();
-        printf("%s(Parser)", BLUE_BOLD);
-        if (pCounter == 0)
-        {
-            printf("%s La expresión es Válida\n", GREEN);
-            printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE_BOLD, CYAN_BOLD, result);
-        }
-        else
-        {
-            SetError(true);
-            printf("%s Error Sintáctico\n", RED);
-            printf("\t-> Paréntesis desbalanceados\n");
-        }
-    }
-}
-
-static void CleanGlobalVariables()
-{
-    // Reset console colors.
-    printf("\n\e[0m");
-    pCounter = 0;
-    result = 0;
-    openedAssignation = false;
-    SetError(false);
-}
-
 void CheckToken(Token currentToken, Token lastToken)
 {
     if (lastToken == INITIAL)
@@ -183,4 +153,34 @@ static bool IsTokenOperator(Token t)
 static bool IsTokenConstant(Token t)
 {
     return t == NUMBER || t == IDENTIFICATOR;
+}
+
+static void PrintResult()
+{
+    if (!GetError())
+    {
+        PrintMemory();
+        printf("%s(Parser)", BLUE_BOLD);
+        if (pCounter == 0)
+        {
+            printf("%s La expresión es Válida\n", GREEN);
+            printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE_BOLD, CYAN_BOLD, result);
+        }
+        else
+        {
+            SetError(true);
+            printf("%s Error Sintáctico\n", RED);
+            printf("\t-> Paréntesis desbalanceados\n");
+        }
+    }
+}
+
+static void CleanGlobalVariables()
+{
+    // Reset console colors.
+    printf("\n\e[0m");
+    pCounter = 0;
+    result = 0;
+    openedAssignation = false;
+    SetError(false);
 }
