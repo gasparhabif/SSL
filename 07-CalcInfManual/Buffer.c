@@ -1,4 +1,5 @@
 #include "Buffer.h"
+#include "Memory.h"
 
 void CleanBuffer()
 {
@@ -32,4 +33,9 @@ static void PrintBuffer()
     for (int i = 0; i <= bufferPos; i++)
         printf("%c", buffer[i]);
     printf("\n");
+}
+
+int BufferValue()
+{
+    return CheckIdExistence(buffer) ? GetMemoryValue(buffer) : atoi(buffer);
 }

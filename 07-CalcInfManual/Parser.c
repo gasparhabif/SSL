@@ -182,8 +182,3 @@ static bool IsTokenConstant(Token t)
 {
     return t == NUMBER || t == IDENTIFICATOR;
 }
-
-static int BufferValue()
-{
-    return CheckIdExistence(buffer) ? GetMemoryValue(buffer) : atoi(buffer);
-}

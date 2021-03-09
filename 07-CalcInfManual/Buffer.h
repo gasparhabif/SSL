@@ -7,4 +7,5 @@ static int bufferPos;
 
 void CleanBuffer();
 void AddCharToBuffer(char c);
+int BufferValue();
 static void PrintBuffer();
