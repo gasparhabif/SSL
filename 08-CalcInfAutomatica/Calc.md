@@ -57,7 +57,7 @@ Por otra parte para poder analizar sintácticamente las expresiones de manera co
 
 La implementación a nivel sintáctico esta a cargo del `Parser` compuesto de funciones donde se destacan las siguientes: 
 
-- RunScan(): Da comienzo al programa y se encarga de la invocación de las rutinas recursivas.
+- RunProgram(): Da comienzo al programa y se encarga de la invocación de las rutinas recursivas.
 - CheckToken(Token, Token): Valida que el token actual tenga sentido sintáctico en base al token anterior. 
 - EvaluateExpresion(Token, int): Con el token actual y la última operación realizada  se encarga de operar, guardando el resultado en una variable global.
 

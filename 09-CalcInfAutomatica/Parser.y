@@ -22,18 +22,18 @@
 %token <string> ASSIGNATION
 %token <string> END 0
 
-%type <string> runScan
+%type <string> runProgram
 %type <string> program
 %type <number> sentenceList
 %type <number> sentence
 %type <number> expresion
 %type <number> term
 %type <number> factor
-%start runScan
+%start runProgram
 
 %%
 
-runScan: program;
+runProgram: program;
 
 program: sentenceList END; 
 
@@ -70,7 +70,7 @@ int yylex() {
     return GetNextToken();
 }
 
-void RunScan() {
+void RunProgram() {
     printf("Ingrese la expresión a evaluar: \n");
     switch(yyparse()){
     case 0:
@@ -81,7 +81,7 @@ void RunScan() {
       break;
     }
     CleanGlobalVariables();
-    RunScan();
+    RunProgram();
 }
 
 static void PrintResult(int result)

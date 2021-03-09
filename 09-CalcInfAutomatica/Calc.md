@@ -66,7 +66,7 @@ Por otra parte para poder analizar sintácticamente las expresiones de manera co
 
 ## Implementación a Nivel Sintáctico
 
-Internamente la función `runScan` llama a la función propia de **Bison** `yyparse()`, quien a su vez lee la secuencia de tokens con la función `yylex()` del `Scanner`.  
+Internamente la función `RunProgram` llama a la función propia de **Bison** `yyparse()`, quien a su vez lee la secuencia de tokens con la función `yylex()` del `Scanner`.  
 
 >  **Error Sintactico:** Al detectarse la presencia de un Token seguido
 > de otro de manera que la secuencia no forma parte de la gramática del

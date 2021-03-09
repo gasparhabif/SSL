@@ -1,7 +1,7 @@
 #include "Scanner.h"
 #include "Memory.h"
 
-void RunScan();
+void RunProgram();
 static void CleanGlobalVariables();
 static void PrintResult(int result);
 void CleanYylex();

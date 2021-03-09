@@ -2,6 +2,6 @@
 
 int main()
 {
-    RunScan();
+    RunProgram();
     return 0;
 }

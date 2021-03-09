@@ -1,6 +1,6 @@
 #include "Parser.h"
 
-void RunScan()
+void RunProgram()
 {
     printf("Ingrese la expresión a evaluar: \n");
 
@@ -23,7 +23,7 @@ void RunScan()
 
     PrintResult(currentToken);
     CleanGlobalVariables();
-    RunScan();
+    RunProgram();
 }
 
 static int EvaluateExpresion(Token currentToken, int lastOperation)
@@ -181,9 +181,4 @@ static bool IsTokenOperator(Token t)
 static bool IsTokenConstant(Token t)
 {
     return t == NUMBER || t == IDENTIFICATOR;
-}
-
-static int BufferValue()
-{
-    return CheckIdExistence(buffer) ? GetMemoryValue(buffer) : atoi(buffer);
 }

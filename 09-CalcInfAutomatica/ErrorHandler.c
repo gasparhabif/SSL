@@ -9,7 +9,7 @@ static void ThrowError()
 {
     error = true;
     CleanYylex();
-    RunScan();
+    RunProgram();
 }
 
 void SetError(bool b)
