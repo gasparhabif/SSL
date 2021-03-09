@@ -1,14 +1,19 @@
 #include "Parser.h"
 
-void RunScan()
+void RunProgram()
 {
     printf("Ingrese la expresión a evaluar: \n");
 
-    Token currentToken = INITIAL;
-    Token lastToken = INITIAL;
-    int lastOperation = INITIAL;
+    Program(INITIAL, INITIAL, INITIAL);
 
-    while (currentToken != END && !GetError())
+    PrintResult();
+    CleanGlobalVariables();
+    RunProgram();
+}
+
+static void Program(Token currentToken, Token lastToken, int lastOperation)
+{
+    if (currentToken != END && !GetError())
     {
         currentToken = GetNextToken();
         // Lexical error detection
@@ -19,11 +24,8 @@ void RunScan()
                 lastOperation = EvaluateExpresion(currentToken, lastOperation);
             lastToken = currentToken;
         }
+        Program(currentToken, lastToken, lastOperation);
     }
-
-    PrintResult(currentToken);
-    CleanGlobalVariables();
-    RunScan();
 }
 
 static int EvaluateExpresion(Token currentToken, int lastOperation)
@@ -80,7 +82,7 @@ static int EvaluateExpresion(Token currentToken, int lastOperation)
     return currentToken;
 }
 
-static void PrintResult(Token currentToken)
+static void PrintResult()
 {
     if (!GetError())
     {
