@@ -14,21 +14,11 @@
 }
 
 %token <number> NUMBER
-%token <string> IDENTIFICATOR
-%token <string> ADDITION
-%token <string> PRODUCT
-%token <string> OP_PARENTHESIS
-%token <string> CL_PARENTHESIS
-%token <string> ASSIGNATION
+%token <string> IDENTIFICATOR ADDITION PRODUCT OP_PARENTHESIS CL_PARENTHESIS ASSIGNATION
 %token <string> END 0
 
-%type <string> runProgram
-%type <string> program
-%type <number> sentenceList
-%type <number> sentence
-%type <number> expresion
-%type <number> term
-%type <number> factor
+%type <string> runProgram program
+%type <number> sentenceList sentence expresion term factor
 %start runProgram
 
 %%

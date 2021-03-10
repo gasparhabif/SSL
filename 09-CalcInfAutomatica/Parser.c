@@ -425,8 +425,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    36,    36,    38,    40,    41,    44,    45,    48,    49,
-      52,    53,    56,    57,    58
+       0,    26,    26,    28,    30,    31,    34,    35,    38,    39,
+      42,    43,    46,    47,    48
 };
 #endif
 
@@ -1337,47 +1337,47 @@ yyreduce:
   switch (yyn)
     {
         case 6:
-#line 44 "Parser.y"
+#line 34 "Parser.y"
     { AddMemoryBlock((yyvsp[(1) - (3)].string), (yyvsp[(3) - (3)].number)); ;}
     break;
 
   case 7:
-#line 45 "Parser.y"
+#line 35 "Parser.y"
     { PrintResult((yyvsp[(1) - (1)].number)); ;}
     break;
 
   case 8:
-#line 48 "Parser.y"
+#line 38 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (1)].number); ;}
     break;
 
   case 9:
-#line 49 "Parser.y"
+#line 39 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (3)].number) + (yyvsp[(3) - (3)].number); ;}
     break;
 
   case 10:
-#line 52 "Parser.y"
+#line 42 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (1)].number); ;}
     break;
 
   case 11:
-#line 53 "Parser.y"
+#line 43 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (3)].number) * (yyvsp[(3) - (3)].number); ;}
     break;
 
   case 12:
-#line 56 "Parser.y"
+#line 46 "Parser.y"
     { (yyval.number) = GetMemoryValue((yyvsp[(1) - (1)].string)); ;}
     break;
 
   case 13:
-#line 57 "Parser.y"
+#line 47 "Parser.y"
     { (yyval.number) = (yyvsp[(1) - (1)].number); ;}
     break;
 
   case 14:
-#line 58 "Parser.y"
+#line 48 "Parser.y"
     { (yyval.number) = (yyvsp[(2) - (3)].number); ;}
     break;
 
@@ -1597,7 +1597,7 @@ yyreturn:
 }
 
 
-#line 61 "Parser.y"
+#line 51 "Parser.y"
 
 
 

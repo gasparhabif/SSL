@@ -31,7 +31,7 @@ $(FLEXC): $(FLEXL)
 	flex -o$(FLEXC) $(FLEXL)
 
 $(BISONC): $(BISONY)
-	bison -o$(BISONC) $(BISONY) --defines=$(BISONH)
+	bison -d -o$(BISONC) $(BISONY) --defines=$(BISONH)
 	
 clean:
 	-rm -f *.o
