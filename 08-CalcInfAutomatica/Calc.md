@@ -5,7 +5,6 @@ El diseño a nivel léxico está dado por una máquina de estado junto a una gra
 ### Tokens Válidos 
 | TOKEN          | REPRESENTA | UTILIZACIÓN                                                                         |
 | -------------- | ---------- | ----------------------------------------------------------------------------------- |
-| INITIAL        |            | Indica el comienzo del programa.                                                    |
 | IDENTIFICATOR  | [A-Za-z]   | Utilizado para representar un carácter de los identificadores de variables.         |
 | NUMBER         | [0-9]      | Utilizado para representar un número natural con representación literal en base 10. |
 | ADDITION       | +          | Utilizado para representar la adición.                                              |
