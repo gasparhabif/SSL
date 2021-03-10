@@ -46,31 +46,7 @@ static int EvaluateExpresion(Token currentToken, int lastOperation)
     case CL_PARENTHESIS:
     case END:
     {
-        switch (lastOperation)
-        {
-        case ADDITION:
-            result += BufferValue();
-            break;
-        case PRODUCT:
-            result = result == 0 ? BufferValue() : result * BufferValue();
-            break;
-        case ASSIGNATION:
-            if (currentToken == END)
-            {
-                openedAssignation = false;
-                SetMemoryValue(BufferValue());
-            }
-            break;
-
-        default:
-            break;
-        }
-
-        if (openedAssignation && currentToken == END)
-        {
-            SetMemoryValue(result);
-            openedAssignation = false;
-        }
+        ResolveExpresion(currentToken, lastOperation);
     }
     break;
 
@@ -80,6 +56,35 @@ static int EvaluateExpresion(Token currentToken, int lastOperation)
 
     CleanBuffer();
     return currentToken;
+}
+
+void ResolveExpresion(Token currentToken, int lastOperation)
+{
+    switch (lastOperation)
+    {
+    case ADDITION:
+        result += BufferValue();
+        break;
+    case PRODUCT:
+        result = result == 0 ? BufferValue() : result * BufferValue();
+        break;
+    case ASSIGNATION:
+        if (currentToken == END)
+        {
+            openedAssignation = false;
+            SetMemoryValue(BufferValue());
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    if (openedAssignation && currentToken == END)
+    {
+        SetMemoryValue(result);
+        openedAssignation = false;
+    }
 }
 
 void CheckToken(Token currentToken, Token lastToken)
