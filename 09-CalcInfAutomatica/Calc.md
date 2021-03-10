@@ -41,7 +41,7 @@ En esta iteración se desarrolla el `Parser` utilizando la herramienta **Bison**
 
 Las expresiones válidas a nivel sintáctico serán aquellas que respondan a la **gramática independiente del contexto (CFG)** previamente generada.
 
-Por otra parte para poder analizar sintácticamente las expresiones de manera correcta se usa el análisis de tipo **Descendente Recursivo** donde se van reduciendo las expresiones para poder obtener el valor final.
+Por otra parte para poder analizar sintácticamente las expresiones de manera correcta se usa el análisis de tipo **Descendente Recursivo** donde se van reduciendo las expresiones para poder obtener el valor final. Esta recursión es a izquierda ya que de lo contrario YACC utilizaria demasiada memoria para mantener todos los comandos/tokens ingresados en el stack.
 
   
 
