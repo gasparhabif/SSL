@@ -2,8 +2,7 @@
 
 int main()
 {
-    printf("Inserte la expresión a evaluar: \n");
-    Run_Scan();
 
+    RunProgram();
     return 0;
 }

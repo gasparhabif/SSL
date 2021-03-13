@@ -1,126 +1,52 @@
 #include "Parser.h"
 
-Token lastToken;
-int pCounter;
-
-static void ThrowSintacticalError(Token actual, char *expected);
-void CheckToken(Token t);
-static bool IsTokenOperator(Token t);
-static bool IsTokenConstant(Token t);
-
-void Run_Scan()
+void RunProgram(void)
 {
-    lastToken = INITIAL;
-    pCounter = 0;
+    printf("Inserte la expresión a evaluar: \n");
 
-    Program();
+    bool result = Program();
+    PrintResult(result);
 
-    if (CurrentToken != ERROR)
-    {
-        if (pCounter == 0)
-        {
-            printf("(Parser) La expresión es Válida");
-        }
-        else
-        {
-            printf("(Parser) Error Sintáctico\n");
-            printf("\t-> Paréntesis desbalanceados");
-            exit(1);
-        }
-    }
+    RunProgram();
+}
+
+static bool Program(void)
+{
+    return CheckExpresion();
+}
+
+static bool CheckSentnece(void)
+{
+    Token t = GetNextToken();
+    if (t == END)
+        return true;
     else
-    {
-        exit(1);
-    }
+        return isConstant(t) ? CheckSentnece() : CheckExpresion();
 }
 
-static void Program()
+static bool CheckExpresion(void)
 {
-    if (CurrentToken != END && CurrentToken != ERROR)
-    {
-        CurrentToken = GetNextToken();
-        PrintToken(CurrentToken);
-        CheckToken(CurrentToken);
-
-        lastToken = CurrentToken;
-        Program();
-    }
+    Token nextToken = GetNextToken();
+    return isConstant(nextToken) ? CheckSentnece()
+                                 : ThrowSintacticalError(TokenToString(nextToken), "Identificador/Constante");
 }
 
-static void ThrowSintacticalError(Token actual, char *expected)
-{
-    printf("(Parser) Error Sintáctico\n");
-    printf("\t-> Token actual: %s", TokenToString(actual));
-    printf("\n\t-> Tokens esperados: %s", expected);
-    CurrentToken = ERROR;
-}
-
-void CheckToken(Token t)
-{
-    if (lastToken == INITIAL)
-    {
-        if (t == OP_PARENTHESIS)
-            pCounter++;
-
-        if (t == ADDITION || t == PRODUCT || t == CL_PARENTHESIS)
-        {
-            CurrentToken = ERROR;
-            ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Apertura '('");
-            return;
-        }
-        else
-            return;
-    }
-    else
-    {
-        switch (t)
-        {
-        case END:
-        case ADDITION:
-        case PRODUCT:
-        {
-            if (!(IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS))
-                ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Cierre ')'");
-        }
-        break;
-        case NUMBER:
-        {
-            if (!(IsTokenOperator(lastToken) || lastToken == NUMBER || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Número, Operador o Paréntesis de Apertura '('");
-        }
-        break;
-        case IDENTIFICATOR:
-        {
-            if (!(IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Identificador, Operador o Paréntesis de Apertura '('");
-        }
-        break;
-        case OP_PARENTHESIS:
-        {
-            pCounter++;
-            if (!(IsTokenOperator(lastToken) || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalError(t, "Operador o Paréntesis de Apertura '('");
-        }
-        break;
-        case CL_PARENTHESIS:
-        {
-            pCounter--;
-            if (!(IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS) && pCounter >= 0)
-                ThrowSintacticalError(t, "Número, Identificador o Paréntesis de Cierre ')'");
-        }
-        break;
-        default:
-            ThrowSintacticalError(t, "[No detectado]");
-        }
-    }
-}
-
-static bool IsTokenOperator(Token t)
-{
-    return t == ADDITION || t == PRODUCT;
-}
-
-static bool IsTokenConstant(Token t)
+static bool isConstant(Token t)
 {
     return t == NUMBER || t == IDENTIFICATOR;
+}
+
+static bool ThrowSintacticalError(char *currentToken, char *expectedToken)
+{
+    printf("(Parser) Error Sintáctico\n");
+    printf("\t-> Token actual: %s", currentToken);
+    printf("\n\t-> Token esperado: %s\n\n", expectedToken);
+    fseek(stdin, 0, SEEK_END);
+    return false;
+}
+
+static void PrintResult(bool correct)
+{
+    if (correct)
+        printf("(Parser) La expresión es Válida\n\n");
 }

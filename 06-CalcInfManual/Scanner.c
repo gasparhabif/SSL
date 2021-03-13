@@ -5,59 +5,48 @@ static char *POSSIBLE_NUM = "0123456789";
 
 static char *ADDITION_OP = "+";
 static char *PRODUCT_OP = "*";
-
-static char *PARENTHESIS_OP = "(";
-static char *PARENTHESIS_CL = ")";
+static char *ASSIGNATION_OP = "=";
 
 Token GetNextToken()
 {
     char newChar = getchar();
+    Token t = -1;
 
     if (newChar == EOF || newChar == '\n')
-        return END;
+        t = END;
 
     // Its an Identificator
     if (IsIncluded(POSSIBLE_IDS, newChar))
-        return IDENTIFICATOR;
+        t = IDENTIFICATOR;
 
     // Its a Number
     if (IsIncluded(POSSIBLE_NUM, newChar))
-        return NUMBER;
+        t = NUMBER;
 
     if (IsIncluded(ADDITION_OP, newChar))
-        return ADDITION;
+        t = ADDITION;
 
     if (IsIncluded(PRODUCT_OP, newChar))
-        return PRODUCT;
+        t = PRODUCT;
 
-    // Opening Parenthesis
-    if (IsIncluded(PARENTHESIS_OP, newChar))
-        return OP_PARENTHESIS;
+    if (IsIncluded(ASSIGNATION_OP, newChar))
+        t = ASSIGNATION;
 
-    // Closing Parenthesis
-    if (IsIncluded(PARENTHESIS_CL, newChar))
-        return CL_PARENTHESIS;
-
-    // If its not a valid token, Lexical error must be shown.
-    ThrowLexicalError();
-    return ERROR;
+    if (t != -1)
+        PrintToken(t);
+    else
+        ThrowLexicalError();
+    return t;
 }
 
-bool IsIncluded(char *grammar, char c)
+static bool IsIncluded(char *grammar, char c)
 {
-    size_t length = strlen(grammar);
-
-    for (int i = 0; i < length; i++)
-    {
-        if (grammar[i] == c)
-            return true;
-    }
-    return false;
+    return strchr(grammar, c) != NULL;
 }
 
-void PrintToken(Token t)
+static void PrintToken(Token t)
 {
-    if (t != END && t != INITIAL && t != ERROR)
+    if (t != END)
     {
         char *tokenValue = TokenToString(t);
         printf("(Scanner) Token encontrado: %s \n", tokenValue);
@@ -76,19 +65,17 @@ char *TokenToString(Token t)
         return "Adición [+]";
     case PRODUCT:
         return "Producto [*]";
-    case OP_PARENTHESIS:
-        return "Apertura de Paréntesis '('";
-    case CL_PARENTHESIS:
-        return "Cierre de Paréntesis ')'";
+    case ASSIGNATION:
+        return "Asignacion [=]";
     case END:
         return "Enter (EOF)";
     default:
-        return "";
+        return "[Token no Detectado]";
     }
 }
 
-static void ThrowLexicalError()
+static void ThrowLexicalError(void)
 {
     printf("(Scanner) Error Léxico\n");
-    CurrentToken = ERROR;
+    fseek(stdin, 0, SEEK_END);
 }

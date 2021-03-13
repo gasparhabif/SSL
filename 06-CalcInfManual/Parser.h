@@ -1,4 +1,9 @@
 #include "Scanner.h"
 
-void Run_Scan();
-static void Program();
+void RunProgram(void);
+static bool Program();
+static bool CheckSentnece(void);
+static bool CheckExpresion(void);
+static bool isConstant(Token);
+static void PrintResult(bool);
+static bool ThrowSintacticalError(char *, char *);
