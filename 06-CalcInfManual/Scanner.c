@@ -7,7 +7,7 @@ static char *ADDITION_OP = "+";
 static char *PRODUCT_OP = "*";
 static char *ASSIGNATION_OP = "=";
 
-Token GetNextToken()
+Token GetNextToken(void)
 {
     char newChar = getchar();
     Token t = -1;
