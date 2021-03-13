@@ -76,6 +76,6 @@ char *TokenToString(Token t)
 
 static void ThrowLexicalError(void)
 {
-    printf("(Scanner) Error Léxico\n");
+    printf("(Scanner) Error Léxico\n\n");
     fseek(stdin, 0, SEEK_END);
 }
