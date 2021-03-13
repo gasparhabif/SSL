@@ -29,9 +29,7 @@ static bool CheckExpresion(void)
 {
     Token nextToken = GetNextToken();
     return isConstant(nextToken) ? CheckSentnece()
-           : nextToken == -1
-               ? false
-               : ThrowSintacticalError(TokenToString(nextToken), "Identificador/Constante");
+                                 : ThrowSintacticalError(nextToken, "Identificador/Constante");
 }
 
 static bool isConstant(Token t)
@@ -39,11 +37,14 @@ static bool isConstant(Token t)
     return t == NUMBER || t == IDENTIFICATOR;
 }
 
-static bool ThrowSintacticalError(char *currentToken, char *expectedToken)
+static bool ThrowSintacticalError(Token currentToken, char *expected)
 {
-    printf("(Parser) Error Sintáctico\n");
-    printf("\t-> Token actual: %s", currentToken);
-    printf("\n\t-> Token esperado: %s\n\n", expectedToken);
+    if (currentToken != -1)
+    {
+        printf("(Parser) Error Sintáctico\n");
+        printf("\t-> Token actual: %s", TokenToString(currentToken));
+        printf("\n\t-> Token esperado: %s\n\n", expected);
+    }
     fseek(stdin, 0, SEEK_END);
     return false;
 }
