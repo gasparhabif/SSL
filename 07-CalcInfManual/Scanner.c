@@ -1,9 +1,9 @@
 #include "Scanner.h"
 
-Token GetNextToken()
+Token GetNextToken(void)
 {
     char newChar = getchar();
-    Token t = INITIAL;
+    Token t = -1;
 
     if (newChar == EOF || newChar == '\n')
         t = END;
@@ -41,30 +41,32 @@ Token GetNextToken()
         AddCharToBuffer(newChar);
 
     // If its not a valid token the value won't be overwritten,
-    // it's value will still be INITIAL and Lexical Exception will be shown.
-    if (t == INITIAL)
+    // it's value will still be -1 and Lexical Exception will be shown.
+    if (t == -1)
         ThrowLexicalException();
+    else
+        PrintToken(t, newChar);
 
     return t;
 }
 
 void PrintToken(Token t)
 {
-    if (t != END && t != INITIAL)
+    if (t != END)
     {
         char *tokenValue = TokenToString(t);
         printf("%s(Scanner)%s Token encontrado: %s%s \n", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
     }
 }
 
-char *TokenToString(Token t)
+char *TokenToString(Token t, char c)
 {
     switch (t)
     {
     case IDENTIFICATOR:
-        return "Identificador";
+        return "Identificador [%c]", c;
     case NUMBER:
-        return "Número";
+        return "Número [%c]", c;
     case ADDITION:
         return "Adición [+]";
     case PRODUCT:
@@ -77,8 +79,6 @@ char *TokenToString(Token t)
         return "Enter (EOF)";
     case ASSIGNATION:
         return "Asignación [=]";
-    case INITIAL:
-        return "Inicial";
     default:
         return "[Token no Detectado]";
     }

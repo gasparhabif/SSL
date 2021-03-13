@@ -15,20 +15,19 @@
 
 enum Tokens
 {
-    INITIAL = 0,
     IDENTIFICATOR,
     NUMBER,
     ADDITION,
     PRODUCT,
+    ASSIGNATION,
     OP_PARENTHESIS,
     CL_PARENTHESIS,
-    ASSIGNATION,
     END
 };
 
 typedef enum Tokens Token;
 
 Token GetNextToken(void);
-void PrintToken(Token t);
-char *TokenToString(Token t);
+char *TokenToString(Token);
+static void PrintToken(Token, char);
 static bool IsIncluded(char *grammar, char c);
