@@ -4,155 +4,98 @@ void RunProgram()
 {
     printf("Ingrese la expresión a evaluar: \n");
 
-    Program(-1, -1, -1);
-
-    PrintResult();
-    CleanGlobalVariables();
-    RunProgram();
+    Program();
 }
 
-static void Program(Token currentToken, Token lastToken, int lastOperation)
+static void Program(void)
 {
-    if (currentToken != END && !GetError())
+    EvaluateSentence();
+    EvaluateSentenceList();
+}
+
+static void EvaluateSentenceList(void)
+{
+    RestartOnError();
+    Token token = GetNextToken();
+    IsTokenConstant(token) ? EvaluateSentence()
+                           : EvaluateSentenceList();
+}
+
+static void EvaluateSentence(void)
+{
+    RestartOnError();
+    Token token = GetNextToken();
+    if (token == IDENTIFICATOR)
     {
-        currentToken = GetNextToken();
-        // Lexical error detection
-        if (!GetError())
+        int result;
+        if (IsNextToken(ASSIGNATION))
         {
-            CheckToken(currentToken, lastToken);
-            if (!IsTokenConstant(currentToken))
-                lastOperation = EvaluateExpresion(currentToken, lastOperation);
-            lastToken = currentToken;
+            AddToMemory(buffer);
+            result = EvaluateExpresion();
+            SetMemoryValue(result);
         }
-        Program(currentToken, lastToken, lastOperation);
-    }
-}
-
-static int EvaluateExpresion(Token currentToken, int lastOperation)
-{
-    switch (currentToken)
-    {
-    case ADDITION:
-        result += BufferValue();
-        break;
-    case PRODUCT:
-        if (lastOperation != CL_PARENTHESIS)
-            result = result == 0 ? BufferValue() : result * BufferValue();
-        break;
-    case ASSIGNATION:
-        openedAssignation = true;
-        AddToMemory(buffer);
-        break;
-    case CL_PARENTHESIS:
-    case END:
-    {
-        ResolveExpresion(currentToken, lastOperation);
-    }
-    break;
-
-    default:
-        break;
-    }
-
-    CleanBuffer();
-    return currentToken;
-}
-
-void ResolveExpresion(Token currentToken, int lastOperation)
-{
-    switch (lastOperation)
-    {
-    case ADDITION:
-        result += BufferValue();
-        break;
-    case PRODUCT:
-        result = result == 0 ? BufferValue() : result * BufferValue();
-        break;
-    case ASSIGNATION:
-        if (currentToken == END)
+        else
         {
-            openedAssignation = false;
-            SetMemoryValue(BufferValue());
+            result = EvaluateExpresion();
         }
-        break;
-
-    default:
-        break;
-    }
-
-    if (openedAssignation && currentToken == END)
-    {
-        SetMemoryValue(result);
-        openedAssignation = false;
-    }
-}
-
-void CheckToken(Token currentToken, Token lastToken)
-{
-    if (lastToken == -1)
-    {
-        if (currentToken == OP_PARENTHESIS)
-            pCounter++;
-
-        if (currentToken == ADDITION || currentToken == PRODUCT || currentToken == CL_PARENTHESIS)
-        {
-            ThrowSintacticalException(TokenToString(currentToken), "Número, Identificador o Paréntesis de Apertura '('");
-            return;
-        }
+        PrintResult(result);
     }
     else
     {
-        switch (currentToken)
-        {
-        case ASSIGNATION:
-        {
-            if (lastToken != IDENTIFICATOR)
-                ThrowSintacticalException(TokenToString(currentToken), "Identificador");
-        }
-        break;
-        case END:
-        case ADDITION:
-        case PRODUCT:
-        {
-            if (!(IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS))
-                ThrowSintacticalException(TokenToString(currentToken), "Número, Identificador o Paréntesis de Cierre ')'");
-        }
-        break;
-        case NUMBER:
-        {
-            if (!(IsTokenOperator(lastToken) || lastToken == NUMBER || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalException(TokenToString(currentToken), "Número, Operador o Paréntesis de Apertura '('");
-        }
-        break;
-        case IDENTIFICATOR:
-        {
-            if (!(IsTokenOperator(lastToken) || lastToken == IDENTIFICATOR || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalException(TokenToString(currentToken), "Identificador, Operador o Paréntesis de Apertura '('");
-        }
-        break;
-        case OP_PARENTHESIS:
-        {
-            pCounter++;
-            if (!(IsTokenOperator(lastToken) || lastToken == OP_PARENTHESIS))
-                ThrowSintacticalException(TokenToString(currentToken), "Operador o Paréntesis de Apertura '('");
-        }
-        break;
-        case CL_PARENTHESIS:
-        {
-            pCounter--;
-            if (!(IsTokenConstant(lastToken) || lastToken == CL_PARENTHESIS) && pCounter >= 0)
-                ThrowSintacticalException(TokenToString(currentToken), "Número, Identificador o Paréntesis de Cierre ')'");
-        }
-        break;
-        default:
-            ThrowSintacticalException(TokenToString(currentToken), "[No detectado]");
-        }
+        int result = EvaluateExpresion();
+        CheckNextToken(END);
+        PrintResult(result);
     }
 }
 
-static bool IsTokenOperator(Token t)
+static int EvaluateExpresion(void)
 {
-    return t == ADDITION || t == PRODUCT || t == ASSIGNATION;
+    RestartOnError();
+    int result = EvaluateTerm();
+    return IsNextToken(ADDITION) ? result + EvaluateExpresion()
+                                 : result;
+}
+
+static int EvaluateTerm(void)
+{
+    RestartOnError();
+    int result = EvaluateFactor();
+    return IsNextToken(PRODUCT) ? result * EvaluateTerm()
+                                : result;
+}
+
+static int EvaluateFactor(void)
+{
+    RestartOnError();
+    int result;
+    Token token = GetNextToken();
+    switch (token)
+    {
+    case END:
+    case IDENTIFICATOR:
+    case NUMBER:
+        return BufferValue();
+    case OP_PARENTHESIS:
+        result = EvaluateExpresion();
+        CheckNextToken(CL_PARENTHESIS);
+        break;
+    default:
+        ThrowSintacticalException(TokenToString(token), "Número, Identificador o Paréntesis de Apertura '('");
+        break;
+    }
+    return result;
+}
+
+static bool IsNextToken(Token expectedToken)
+{
+    return GetNextToken() == expectedToken;
+}
+
+static void CheckNextToken(Token expectedToken)
+{
+    Token currentToken = GetNextToken();
+    if (currentToken != expectedToken)
+        ThrowSintacticalException(TokenToString(currentToken), TokenToString(expectedToken));
 }
 
 static bool IsTokenConstant(Token t)
@@ -160,32 +103,32 @@ static bool IsTokenConstant(Token t)
     return t == NUMBER || t == IDENTIFICATOR;
 }
 
-static void PrintResult()
+static void PrintResult(int result)
 {
     if (!GetError())
     {
         PrintMemory();
-        printf("%s(Parser)", BLUE_BOLD);
-        if (pCounter == 0)
-        {
-            printf("%s La expresión es Válida\n", GREEN);
-            printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE_BOLD, CYAN_BOLD, result);
-        }
-        else
-        {
-            SetError(true);
-            printf("%s Error Sintáctico\n", RED);
-            printf("\t-> Paréntesis desbalanceados\n");
-        }
+        printf("%s(Parser) ", BLUE_BOLD);
+        printf("%sLa expresión es Válida\n", GREEN);
+        printf("%s(Calc)%s El resultado de la expresión es: %s%i\n", CYAN_BOLD, WHITE_BOLD, CYAN_BOLD, result);
     }
+    CleanGlobalVariables();
+    RunProgram();
 }
 
-static void CleanGlobalVariables()
+static void CleanGlobalVariables(void)
 {
     // Reset console colors.
     printf("\n\e[0m");
-    pCounter = 0;
-    result = 0;
-    openedAssignation = false;
     SetError(false);
+}
+
+static void RestartOnError(void)
+{
+    if (GetError())
+    {
+        CleanGlobalVariables();
+        CleanBuffer();
+        RunProgram();
+    }
 }

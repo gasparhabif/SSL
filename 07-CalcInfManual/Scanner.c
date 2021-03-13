@@ -3,8 +3,31 @@
 Token GetNextToken(void)
 {
     char newChar = getchar();
-    Token t = -1;
+    int t = DetectToken(newChar);
 
+    switch (t)
+    {
+    case -1:
+        // If its not a valid token the value won't be overwritten,
+        // it's value will still be -1 and Lexical Exception will be shown.
+        ThrowLexicalException();
+        break;
+    case NUMBER:
+    case IDENTIFICATOR:
+        return ProcessConstant(t, newChar);
+    case END:
+        break;
+    default:
+        CleanBuffer();
+        break;
+    }
+
+    return t;
+}
+
+static int DetectToken(char newChar)
+{
+    int t = -1;
     if (newChar == EOF || newChar == '\n')
         t = END;
 
@@ -35,16 +58,23 @@ Token GetNextToken(void)
     if (IsIncluded(PARENTHESIS_CL, newChar))
         t = CL_PARENTHESIS;
 
+    PrintToken(t, newChar);
+    return t;
+}
+
+static Token ProcessConstant(Token t, char newChar)
+{
     if (t == NUMBER || t == IDENTIFICATOR)
+    {
         AddCharToBuffer(newChar);
-
-    // If its not a valid token the value won't be overwritten,
-    // it's value will still be -1 and Lexical Exception will be shown.
-    if (t == -1)
-        ThrowLexicalException();
-    else
-        PrintToken(t, newChar);
-
+        newChar = getchar();
+        if (DetectToken(newChar) == END)
+            return t;
+        else
+            t = DetectToken(newChar);
+        return ProcessConstant(t, newChar);
+    }
+    CleanBuffer();
     return t;
 }
 
@@ -75,7 +105,7 @@ char *TokenToString(Token t)
 
 static void PrintToken(Token t, char c)
 {
-    if (t != END)
+    if (t != END && t != -1)
     {
         char *tokenValue = TokenToString(t);
         printf("%s(Scanner)%s Token encontrado: %s%s", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);

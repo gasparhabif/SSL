@@ -1,16 +1,16 @@
 #include "Scanner.h"
 #include "Memory.h"
 
-static int pCounter;
-static int result;
-static bool openedAssignation = false;
-
-void RunProgram();
-static void Program(Token ct, Token lT, int lO);
-static void CheckToken(Token cT, Token lT);
-static bool IsTokenOperator(Token t);
-static bool IsTokenConstant(Token t);
-static int EvaluateExpresion(Token t, int i);
-static void ResolveExpresion(Token t, int i);
-static void PrintResult();
-static void CleanGlobalVariables();
+void RunProgram(void);
+static void Program(void);
+static void EvaluateSentenceList(void);
+static void EvaluateSentence(void);
+static int EvaluateExpresion(void);
+static int EvaluateTerm(void);
+static int EvaluateFactor(void);
+static bool IsTokenConstant(Token);
+static bool IsNextToken(Token);
+static void CheckNextToken(Token);
+static void PrintResult(int);
+static void CleanGlobalVariables(void);
+static void RestartOnError(void);
