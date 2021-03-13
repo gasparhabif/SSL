@@ -35,8 +35,6 @@ Token GetNextToken(void)
     if (IsIncluded(PARENTHESIS_CL, newChar))
         t = CL_PARENTHESIS;
 
-    PrintToken(t);
-
     if (t == NUMBER || t == IDENTIFICATOR)
         AddCharToBuffer(newChar);
 
@@ -50,23 +48,14 @@ Token GetNextToken(void)
     return t;
 }
 
-void PrintToken(Token t)
-{
-    if (t != END)
-    {
-        char *tokenValue = TokenToString(t);
-        printf("%s(Scanner)%s Token encontrado: %s%s \n", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
-    }
-}
-
-char *TokenToString(Token t, char c)
+char *TokenToString(Token t)
 {
     switch (t)
     {
     case IDENTIFICATOR:
-        return "Identificador [%c]", c;
+        return "Identificador";
     case NUMBER:
-        return "Número [%c]", c;
+        return "Número";
     case ADDITION:
         return "Adición [+]";
     case PRODUCT:
@@ -81,6 +70,18 @@ char *TokenToString(Token t, char c)
         return "Asignación [=]";
     default:
         return "[Token no Detectado]";
+    }
+}
+
+static void PrintToken(Token t, char c)
+{
+    if (t != END)
+    {
+        char *tokenValue = TokenToString(t);
+        printf("%s(Scanner)%s Token encontrado: %s%s", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
+        if (t == NUMBER || t == IDENTIFICATOR)
+            printf(" [%c]", c);
+        printf("\n");
     }
 }
 

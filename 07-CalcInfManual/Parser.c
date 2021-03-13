@@ -4,7 +4,7 @@ void RunProgram()
 {
     printf("Ingrese la expresión a evaluar: \n");
 
-    Program(INITIAL, INITIAL, INITIAL);
+    Program(-1, -1, -1);
 
     PrintResult();
     CleanGlobalVariables();
@@ -89,7 +89,7 @@ void ResolveExpresion(Token currentToken, int lastOperation)
 
 void CheckToken(Token currentToken, Token lastToken)
 {
-    if (lastToken == INITIAL)
+    if (lastToken == -1)
     {
         if (currentToken == OP_PARENTHESIS)
             pCounter++;
