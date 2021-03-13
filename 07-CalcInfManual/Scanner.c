@@ -86,5 +86,5 @@ char *TokenToString(Token t)
 
 static bool IsIncluded(char *grammar, char c)
 {
-    return strstr(grammar, (char[2]){(char)c, '\0'}) != NULL;
+    return strchr(grammar, c) != NULL;
 }
