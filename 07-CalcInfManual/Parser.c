@@ -3,7 +3,6 @@
 void RunProgram()
 {
     printf("Ingrese la expresión a evaluar: \n");
-
     Program();
 }
 
@@ -61,10 +60,10 @@ static int EvaluateFactor()
     RestartOnError();
     switch (currentToken)
     {
-    case END:
     case IDENTIFICATOR:
     case NUMBER:
         result = BufferValue();
+        RestartOnError();
         CleanBuffer();
         break;
     case OP_PARENTHESIS:
@@ -78,12 +77,22 @@ static int EvaluateFactor()
     case ADDITION:
     case PRODUCT:
         if (strlen(buffer))
-            return BufferValue();
+        {
+            result = BufferValue();
+            RestartOnError();
+            return result;
+        }
         else
+        {
             ThrowSintacticalException(TokenToString(currentToken), "Número, Identificador o Paréntesis de Apertura '('");
+            CleanGlobalVariables();
+            RunProgram();
+        }
         break;
     default:
         ThrowSintacticalException(TokenToString(currentToken), "Número, Identificador o Paréntesis de Apertura '('");
+        CleanGlobalVariables();
+        RunProgram();
         break;
     }
     currentToken = GetNextToken();

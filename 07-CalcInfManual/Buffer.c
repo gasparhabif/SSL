@@ -26,12 +26,22 @@ void AddCharToBuffer(char c)
     }
 }
 
-static void PrintBuffer()
+static void PrintBuffer(void)
 {
     printf("%s(Buffer)%s Actualmente almacenado en Buffer: %s\n", YELLOW_BOLD, WHITE, buffer);
 }
 
 int BufferValue()
 {
-    return CheckIdExistence(buffer) ? GetMemoryValue(buffer) : atoi(buffer);
+    return IsBufferAlpha() ? GetMemoryValue(buffer) : atoi(buffer);
+}
+
+static bool IsBufferAlpha(void)
+{
+    for (int i = 0; i < bufferPos; i++)
+    {
+        if (strchr(POSSIBLE_NUM, buffer[i]) != NULL)
+            return false;
+    }
+    return true;
 }
