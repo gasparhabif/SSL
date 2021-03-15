@@ -75,6 +75,13 @@ static int EvaluateFactor()
         else
             return result;
         break;
+    case ADDITION:
+    case PRODUCT:
+        if (strlen(buffer))
+            return BufferValue();
+        else
+            ThrowSintacticalException(TokenToString(currentToken), "Número, Identificador o Paréntesis de Apertura '('");
+        break;
     default:
         ThrowSintacticalException(TokenToString(currentToken), "Número, Identificador o Paréntesis de Apertura '('");
         break;
