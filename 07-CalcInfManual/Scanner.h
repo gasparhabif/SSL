@@ -29,5 +29,7 @@ typedef enum Tokens Token;
 
 Token GetNextToken(void);
 char *TokenToString(Token);
-static void PrintToken(Token, char);
-static bool IsIncluded(char *grammar, char c);
+static Token CheckConstant(Token);
+static Token DetectToken(char);
+static void PrintToken(Token, char *);
+static bool IsIncluded(char *, char);

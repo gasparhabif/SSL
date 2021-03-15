@@ -3,8 +3,70 @@
 Token GetNextToken(void)
 {
     char newChar = getchar();
-    Token t = -1;
+    int token = DetectToken(newChar);
 
+    switch (token)
+    {
+    // If its not a valid token the value won't be overwritten,
+    // it's value will still be -1 and Lexical Exception will be shown.
+    case -1:
+        ThrowLexicalException();
+        return token;
+    case IDENTIFICATOR:
+    case NUMBER:
+        AddCharToBuffer(newChar);
+        return CheckConstant(token);
+    default:
+        PrintToken(token, &newChar);
+        return token;
+    }
+}
+
+static Token CheckConstant(Token actualToken)
+{
+    char nextChar = getchar();
+    Token nextToken = DetectToken(nextChar);
+    if (actualToken == nextToken)
+    {
+        AddCharToBuffer(nextChar);
+        return CheckConstant(nextToken);
+    }
+    else
+    {
+        PrintToken(actualToken, buffer);
+        ungetc(nextChar, stdin);
+        return actualToken;
+    }
+}
+
+char *TokenToString(Token t)
+{
+    switch (t)
+    {
+    case IDENTIFICATOR:
+        return "Identificador";
+    case NUMBER:
+        return "Número";
+    case ADDITION:
+        return "Adición [+]";
+    case PRODUCT:
+        return "Producto [*]";
+    case OP_PARENTHESIS:
+        return "Apertura de Paréntesis '('";
+    case CL_PARENTHESIS:
+        return "Cierre de Paréntesis ')'";
+    case END:
+        return "Enter (EOF)";
+    case ASSIGNATION:
+        return "Asignación [=]";
+    default:
+        return "[Token no Detectado]";
+    }
+}
+
+static Token DetectToken(char newChar)
+{
+    Token t = -1;
     if (newChar == EOF || newChar == '\n')
         t = END;
 
@@ -35,52 +97,17 @@ Token GetNextToken(void)
     if (IsIncluded(PARENTHESIS_CL, newChar))
         t = CL_PARENTHESIS;
 
-    if (t == NUMBER || t == IDENTIFICATOR)
-        AddCharToBuffer(newChar);
-
-    // If its not a valid token the value won't be overwritten,
-    // it's value will still be -1 and Lexical Exception will be shown.
-    if (t == -1)
-        ThrowLexicalException();
-    else
-        PrintToken(t, newChar);
-
     return t;
 }
 
-char *TokenToString(Token t)
+static void PrintToken(Token t, char *value)
 {
-    switch (t)
-    {
-    case IDENTIFICATOR:
-        return "Identificador";
-    case NUMBER:
-        return "Número";
-    case ADDITION:
-        return "Adición [+]";
-    case PRODUCT:
-        return "Producto [*]";
-    case OP_PARENTHESIS:
-        return "Apertura de Paréntesis '('";
-    case CL_PARENTHESIS:
-        return "Cierre de Paréntesis ')'";
-    case END:
-        return "Enter (EOF)";
-    case ASSIGNATION:
-        return "Asignación [=]";
-    default:
-        return "[Token no Detectado]";
-    }
-}
-
-static void PrintToken(Token t, char c)
-{
-    if (t != END)
+    if (t != END && t != -1)
     {
         char *tokenValue = TokenToString(t);
         printf("%s(Scanner)%s Token encontrado: %s%s", MAGENTA_BOLD, WHITE, WHITE_BOLD, tokenValue);
         if (t == NUMBER || t == IDENTIFICATOR)
-            printf(" [%c]", c);
+            printf(" [%s]", value);
         printf("\n");
     }
 }
