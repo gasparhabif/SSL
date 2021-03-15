@@ -10,97 +10,86 @@ void RunProgram()
 static void Program(void)
 {
     EvaluateSentence();
-    EvaluateSentenceList();
-}
-
-static void EvaluateSentenceList(void)
-{
-    RestartOnError();
-    Token token = GetNextToken();
-    IsTokenConstant(token) ? EvaluateSentence()
-                           : EvaluateSentenceList();
 }
 
 static void EvaluateSentence(void)
 {
-    RestartOnError();
-    Token token = GetNextToken();
-    if (token == IDENTIFICATOR)
+    int result;
+    currentToken = GetNextToken();
+    if (IsNextToken(IDENTIFICATOR))
     {
-        int result;
+        char id[BUFFER_SIZE];
+        strcpy(id, buffer);
+        CleanBuffer();
+
         if (IsNextToken(ASSIGNATION))
         {
-            AddToMemory(buffer);
+            AddToMemory(id);
             result = EvaluateExpresion();
             SetMemoryValue(result);
         }
         else
         {
+            strcpy(buffer, id);
             result = EvaluateExpresion();
         }
         PrintResult(result);
     }
     else
     {
-        int result = EvaluateExpresion();
-        CheckNextToken(END);
+        result = EvaluateExpresion();
         PrintResult(result);
     }
 }
 
-static int EvaluateExpresion(void)
+static int EvaluateExpresion()
 {
-    RestartOnError();
     int result = EvaluateTerm();
     return IsNextToken(ADDITION) ? result + EvaluateExpresion()
                                  : result;
 }
 
-static int EvaluateTerm(void)
+static int EvaluateTerm()
 {
-    RestartOnError();
     int result = EvaluateFactor();
     return IsNextToken(PRODUCT) ? result * EvaluateTerm()
                                 : result;
 }
 
-static int EvaluateFactor(void)
+static int EvaluateFactor()
 {
-    RestartOnError();
     int result;
-    Token token = GetNextToken();
-    switch (token)
+    RestartOnError();
+    switch (currentToken)
     {
     case END:
     case IDENTIFICATOR:
     case NUMBER:
-        return BufferValue();
+        result = BufferValue();
+        CleanBuffer();
+        break;
     case OP_PARENTHESIS:
+        currentToken = GetNextToken();
         result = EvaluateExpresion();
-        CheckNextToken(CL_PARENTHESIS);
+        if (!(IsNextToken(CL_PARENTHESIS)))
+            ThrowSintacticalException(TokenToString(currentToken), "Paréntesis de Cierre ')'");
+        else
+            return result;
         break;
     default:
-        ThrowSintacticalException(TokenToString(token), "Número, Identificador o Paréntesis de Apertura '('");
+        ThrowSintacticalException(TokenToString(currentToken), "Número, Identificador o Paréntesis de Apertura '('");
         break;
     }
+    currentToken = GetNextToken();
     return result;
 }
 
 static bool IsNextToken(Token expectedToken)
 {
-    return GetNextToken() == expectedToken;
-}
-
-static void CheckNextToken(Token expectedToken)
-{
-    Token currentToken = GetNextToken();
-    if (currentToken != expectedToken)
-        ThrowSintacticalException(TokenToString(currentToken), TokenToString(expectedToken));
-}
-
-static bool IsTokenConstant(Token t)
-{
-    return t == NUMBER || t == IDENTIFICATOR;
+    bool res = expectedToken == currentToken;
+    if (res)
+        currentToken = GetNextToken();
+    return res;
 }
 
 static void PrintResult(int result)
@@ -119,6 +108,7 @@ static void PrintResult(int result)
 static void CleanGlobalVariables(void)
 {
     // Reset console colors.
+    currentToken = -1;
     printf("\n\e[0m");
     SetError(false);
 }

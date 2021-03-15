@@ -26,6 +26,7 @@ enum Tokens
 };
 
 typedef enum Tokens Token;
+int currentToken;
 
 Token GetNextToken(void);
 char *TokenToString(Token);

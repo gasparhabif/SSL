@@ -22,20 +22,20 @@ Token GetNextToken(void)
     }
 }
 
-static Token CheckConstant(Token actualToken)
+static Token CheckConstant(Token token)
 {
     char nextChar = getchar();
     Token nextToken = DetectToken(nextChar);
-    if (actualToken == nextToken)
+    if (token == nextToken)
     {
         AddCharToBuffer(nextChar);
         return CheckConstant(nextToken);
     }
     else
     {
-        PrintToken(actualToken, buffer);
+        PrintToken(token, buffer);
         ungetc(nextChar, stdin);
-        return actualToken;
+        return token;
     }
 }
 

@@ -17,3 +17,6 @@
 #define BLUE_BOLD "\e[1;34m"
 #define CYAN_BOLD "\e[1;36m"
 #define RED_BOLD "\e[1;31m"
+
+// Buffer
+#define BUFFER_SIZE 100
