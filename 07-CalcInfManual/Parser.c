@@ -18,19 +18,18 @@ static void EvaluateSentence(void)
     currentToken = GetNextToken();
     if (IsNextToken(IDENTIFICATOR))
     {
-        char id[BUFFER_SIZE];
-        strcpy(id, buffer);
+        char tempID[BUFFER_SIZE];
+        strcpy(tempID, buffer);
         CleanBuffer();
 
         if (IsNextToken(ASSIGNATION))
         {
-            AddToMemory(id);
             result = EvaluateExpresion();
-            SetMemoryValue(result);
+            AddMemoryBlock(tempID, result);
         }
         else
         {
-            strcpy(buffer, id);
+            strcpy(buffer, tempID);
             result = EvaluateExpresion();
         }
         PrintResult(result);

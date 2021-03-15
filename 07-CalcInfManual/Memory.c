@@ -1,23 +1,22 @@
 #include "Memory.h"
 
-void AddToMemory(char *id)
+void AddMemoryBlock(char *id, int value)
 {
-    if (!CheckIdExistence(id))
-    {
-        int pos = FindFreeSpace();
-        if (pos != -1)
-        {
-            struct MemoryBlock memBlock;
-            strcpy(memBlock.id, id);
-            memBlock.value = 0;
-            memory[pos] = memBlock;
-        }
-    }
+    int pos;
+    if (CheckIdExistence(id))
+        pos = GetMemoryPos(id);
     else
-    {
-        overwritePos = GetMemoryPos(id);
-        ThrowMemoryException(2);
-    }
+        pos = FindFreeSpace();
+
+    SetMemoryBlock(id, value, pos);
+}
+
+static void SetMemoryBlock(char *id, int value, int pos)
+{
+    struct MemoryBlock memBlock;
+    strcpy(memBlock.id, id);
+    memBlock.value = value;
+    memory[pos] = memBlock;
 }
 
 static int GetMemoryPos(char *id)
@@ -42,20 +41,16 @@ bool CheckIdExistence(char *id)
     return false;
 }
 
-void SetMemoryValue(int value)
-{
-    overwritePos = overwritePos == -1 ? LastMemPos() : overwritePos;
-    memory[overwritePos].value = value;
-    overwritePos = -1;
-}
-
 int GetMemoryValue(char *id)
 {
     for (int i = 0; i <= LastMemPos(); i++)
     {
         struct MemoryBlock mem = memory[i];
         if (!strcmp(mem.id, id))
+        {
+            printf("%s(Memory)%s Identificador reconocido: %s junto a su valor: %i\n", RED_BOLD, WHITE, id, mem.value);
             return mem.value;
+        }
     }
     ThrowMemoryException(3);
     return -1;
