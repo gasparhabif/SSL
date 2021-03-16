@@ -4,7 +4,8 @@
 void CleanBuffer()
 {
     memset(buffer, 0, sizeof buffer);
-    printf("%s(Buffer)%s Limpiado\n", YELLOW_BOLD, WHITE);
+    if (!GetError())
+        printf("%s(Buffer)%s Limpiado\n", YELLOW_BOLD, WHITE);
 }
 
 void AddStringToBuffer(char *str)
@@ -22,7 +23,8 @@ void AddStringToBuffer(char *str)
 
 static void PrintBuffer()
 {
-    printf("%s(Buffer)%s Actualmente almacenado en Buffer: %s\n", YELLOW_BOLD, WHITE, buffer);
+    if (!GetError())
+        printf("%s(Buffer)%s Actualmente almacenado en Buffer: %s\n", YELLOW_BOLD, WHITE, buffer);
 }
 
 int BufferValue()

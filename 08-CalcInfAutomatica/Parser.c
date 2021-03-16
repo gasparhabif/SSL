@@ -82,8 +82,8 @@ static int EvaluateFactor()
         if (strlen(buffer))
         {
             result = BufferValue();
-            CleanBuffer();
             RestartOnError();
+            CleanBuffer();
             return result;
         }
         else
@@ -137,8 +137,9 @@ static void RestartOnError(void)
 {
     if (GetError())
     {
-        CleanGlobalVariables();
+        CleanYylex();
         CleanBuffer();
+        CleanGlobalVariables();
         RunProgram();
     }
 }

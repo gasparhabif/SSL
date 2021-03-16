@@ -1839,7 +1839,7 @@ char *TokenToString(Token t)
     }
 }
 
-static void CleanYylex(void) {
+void CleanYylex(void) {
     int t = -1;
     // Get tokens and ignore it's result until END is recieved 
     while (t != END)
