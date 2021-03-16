@@ -4,13 +4,12 @@
 void CleanBuffer()
 {
     memset(buffer, 0, sizeof buffer);
-    bufferPos = 0;
     printf("%s(Buffer)%s Limpiado\n", YELLOW_BOLD, WHITE);
 }
 
 void AddStringToBuffer(char *str)
 {
-    if (bufferPos < (BUFFER_SIZE - 1))
+    if (strlen(buffer) < (BUFFER_SIZE - 1))
     {
         strcpy(buffer, str);
         PrintBuffer();
@@ -33,7 +32,7 @@ int BufferValue()
 
 static bool IsBufferAlpha(void)
 {
-    for (int i = 0; i < bufferPos; i++)
+    for (int i = 0; i < strlen(buffer); i++)
     {
         if (strchr(POSSIBLE_NUM, buffer[i]) != NULL)
             return false;
