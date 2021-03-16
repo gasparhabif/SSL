@@ -19,3 +19,4 @@ int currentToken;
 Token GetNextToken(void);
 char *TokenToString(Token);
 static void PrintToken(Token, char *);
+static void CleanYylex(void);

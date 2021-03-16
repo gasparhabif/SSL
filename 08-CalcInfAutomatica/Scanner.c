@@ -778,15 +778,16 @@ YY_RULE_SETUP
 #line 25 "Scanner.l"
 {
                         ThrowLexicalException();
+                        CleanYylex();
                         return -1;
                     }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 29 "Scanner.l"
+#line 30 "Scanner.l"
 ECHO;
 	YY_BREAK
-#line 790 "<stdout>"
+#line 791 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1783,22 +1784,20 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 29 "Scanner.l"
+#line 30 "Scanner.l"
 
 
 
 
 // Funciones Publicas
 
-Token GetNextToken() 
+Token GetNextToken(void) 
 {
     Token t = yylex();
     // If its not a valid token the value value will still 
     // be -1 and Lexical Exception will be shown.
     if(t != -1) 
         PrintToken(t, yytext);
-    else
-        ThrowLexicalException();
 
     return t;
 }
@@ -1838,4 +1837,12 @@ char *TokenToString(Token t)
     default:
         return "[Token no Detectado]";
     }
+}
+
+static void CleanYylex(void) {
+    int t = -1;
+    // Get tokens and ignore it's result until END is recieved 
+    while (t != END)
+      t = yylex();
+    
 }

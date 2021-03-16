@@ -24,6 +24,7 @@ IDS     [a-zA-Z]
 "\n"                return END;
 .                   {
                         ThrowLexicalException();
+                        CleanYylex();
                         return -1;
                     }
 %%
@@ -31,15 +32,13 @@ IDS     [a-zA-Z]
 
 // Funciones Publicas
 
-Token GetNextToken() 
+Token GetNextToken(void) 
 {
     Token t = yylex();
     // If its not a valid token the value value will still 
     // be -1 and Lexical Exception will be shown.
     if(t != -1) 
         PrintToken(t, yytext);
-    else
-        ThrowLexicalException();
 
     return t;
 }
@@ -79,4 +78,12 @@ char *TokenToString(Token t)
     default:
         return "[Token no Detectado]";
     }
+}
+
+static void CleanYylex(void) {
+    int t = -1;
+    // Get tokens and ignore it's result until END is recieved 
+    while (t != END)
+      t = yylex();
+    
 }

@@ -15,8 +15,10 @@ static void EvaluateSentence(void)
 {
     int result;
     currentToken = GetNextToken();
+    RestartOnError();
     if (IsExpectedToken(IDENTIFICATOR))
     {
+        RestartOnError();
         char tempID[BUFFER_SIZE];
         strcpy(tempID, buffer);
         CleanBuffer();
@@ -35,6 +37,7 @@ static void EvaluateSentence(void)
     }
     else
     {
+        RestartOnError();
         result = EvaluateExpresion();
         PrintResult(result);
     }
@@ -102,6 +105,7 @@ static int EvaluateFactor()
 
 static bool IsExpectedToken(Token expectedToken)
 {
+    RestartOnError();
     bool res = expectedToken == currentToken;
     if (res)
         currentToken = GetNextToken();
