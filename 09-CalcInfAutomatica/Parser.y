@@ -4,7 +4,7 @@
     static void PrintResult(int result);
     static int yylex(void);
     static void yyerror(char const *s);
-    void CleanYylex();
+    void CleanYylex(void);
 %}
 
 %union 
@@ -60,7 +60,7 @@ int yylex() {
     return GetNextToken();
 }
 
-void RunProgram() {
+void RunProgram(void) {
     printf("Ingrese la expresión a evaluar: \n");
     switch(yyparse()){
     case 0:
@@ -85,14 +85,14 @@ static void PrintResult(int result)
     }
 }
 
-static void CleanGlobalVariables()
+static void CleanGlobalVariables(void)
 {
     // Reset console colors.
     printf("\n\e[0m");
     SetError(false);
 }
 
-void CleanYylex() {
+void CleanYylex(void) {
     int t = -1;
     // Get tokens and ignore it's result until END is recieved 
     while (t != 0)

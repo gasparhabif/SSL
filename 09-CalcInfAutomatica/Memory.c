@@ -58,12 +58,12 @@ int GetMemoryValue(char *id)
     return -1;
 }
 
-static int LastMemPos()
+static int LastMemPos(void)
 {
     return FindFreeSpace() - 1;
 }
 
-int FindFreeSpace()
+int FindFreeSpace(void)
 {
     int pos = 0;
     while (memory[pos].id[0] != '\0')
@@ -78,7 +78,7 @@ int FindFreeSpace()
     return pos;
 }
 
-void PrintMemory()
+void PrintMemory(void)
 {
     for (int i = 0; i < FindFreeSpace(); i++)
     {

@@ -5,7 +5,7 @@
 // 1 (True) for Detected Error
 static bool error = false;
 
-static void ThrowError()
+static void ThrowError(void)
 {
     error = true;
     CleanYylex();
@@ -17,12 +17,12 @@ void SetError(bool b)
     error = b;
 }
 
-bool GetError()
+bool GetError(void)
 {
     return error;
 }
 
-void ThrowLexicalException()
+void ThrowLexicalException(void)
 {
     printf("%s(Scanner)%s Error Léxico. Token invalido\n", MAGENTA_BOLD, RED);
     ThrowError();

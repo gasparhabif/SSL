@@ -375,8 +375,8 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[18] =
     {   0,
-        0,    0,   12,   10,    8,    9,    3,    4,    6,    5,
-        1,    7,    2,    9,    1,    2,    0
+        0,    0,   12,   10,    8,    9,    4,    5,    7,    6,
+        1,    3,    2,    9,    1,    2,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -746,27 +746,27 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 20 "Scanner.l"
-return OP_PARENTHESIS;
+return ASSIGNATION;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 21 "Scanner.l"
-return CL_PARENTHESIS;
+return OP_PARENTHESIS;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 22 "Scanner.l"
-return ADDITION;
+return CL_PARENTHESIS;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 23 "Scanner.l"
-return PRODUCT;
+return ADDITION;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 24 "Scanner.l"
-return ASSIGNATION;
+return PRODUCT;
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */

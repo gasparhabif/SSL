@@ -11,9 +11,9 @@ struct MemoryBlock memory[MEMORY_SIZE];
 
 void AddMemoryBlock(char *id, int v);
 int GetMemoryValue(char *id);
-void PrintMemory();
+void PrintMemory(void);
 static bool CheckIdExistence(char *id);
 static void SetMemoryBlock(char *id, int v, int p);
-static int FindFreeSpace();
-static int LastMemPos();
+static int FindFreeSpace(void);
+static int LastMemPos(void);
 static int GetMemoryPos(char *id);
