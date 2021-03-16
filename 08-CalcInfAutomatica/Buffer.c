@@ -3,11 +3,7 @@
 
 void CleanBuffer()
 {
-    while (bufferPos >= 0)
-    {
-        buffer[bufferPos] = '\0';
-        bufferPos--;
-    }
+    memset(buffer, 0, sizeof buffer);
     bufferPos = 0;
     printf("%s(Buffer)%s Limpiado\n", YELLOW_BOLD, WHITE);
 }
@@ -32,5 +28,15 @@ static void PrintBuffer()
 
 int BufferValue()
 {
-    return CheckIdExistence(buffer) ? GetMemoryValue(buffer) : atoi(buffer);
+    return IsBufferAlpha() ? GetMemoryValue(buffer) : atoi(buffer);
+}
+
+static bool IsBufferAlpha(void)
+{
+    for (int i = 0; i < bufferPos; i++)
+    {
+        if (strchr(POSSIBLE_NUM, buffer[i]) != NULL)
+            return false;
+    }
+    return true;
 }

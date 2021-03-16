@@ -1,11 +1,10 @@
 #include "Constants.h"
 
-#define BUFFER_SIZE 100
-
 char buffer[BUFFER_SIZE];
 static int bufferPos;
 
-void CleanBuffer();
+void CleanBuffer(void);
 void AddStringToBuffer(char *s);
-int BufferValue();
-static void PrintBuffer();
+int BufferValue(void);
+static void PrintBuffer(void);
+static bool IsBufferAlpha(void);
