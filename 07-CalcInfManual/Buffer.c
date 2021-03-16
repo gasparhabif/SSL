@@ -3,11 +3,7 @@
 
 void CleanBuffer()
 {
-    while (bufferPos >= 0)
-    {
-        buffer[bufferPos] = '\0';
-        bufferPos--;
-    }
+    memset(buffer, 0, sizeof buffer);
     bufferPos = 0;
     printf("%s(Buffer)%s Limpiado\n", YELLOW_BOLD, WHITE);
 }
