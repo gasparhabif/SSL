@@ -44,7 +44,7 @@ void ThrowBufferException(void)
 void ThrowMemoryException(int e)
 {
     ThrowError();
-    printf("%s(Memory)%s ", RED_BOLD, WHITE);
+    printf("%s(Memory)%s Error: ", RED_BOLD, RED);
     switch (e)
     {
     case 1:
