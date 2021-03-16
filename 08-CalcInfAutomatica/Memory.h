@@ -8,13 +8,12 @@ struct MemoryBlock
 };
 
 struct MemoryBlock memory[MEMORY_SIZE];
-static int overwritePos = -1;
 
-void AddToMemory(char *id);
-void SetMemoryValue(int i);
+void AddMemoryBlock(char *id, int v);
 int GetMemoryValue(char *id);
+void PrintMemory(void);
 bool CheckIdExistence(char *id);
-void PrintMemory();
-static int FindFreeSpace();
-static int LastMemPos();
+static void SetMemoryBlock(char *id, int v, int p);
+static int FindFreeSpace(void);
+static int LastMemPos(void);
 static int GetMemoryPos(char *id);
