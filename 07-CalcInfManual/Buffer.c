@@ -1,7 +1,7 @@
 #include "Buffer.h"
 #include "Memory.h"
 
-void CleanBuffer()
+void CleanBuffer(void)
 {
     memset(buffer, 0, sizeof buffer);
     bufferPos = 0;
@@ -27,7 +27,7 @@ static void PrintBuffer(void)
     printf("%s(Buffer)%s Actualmente almacenado en Buffer: %s\n", YELLOW_BOLD, WHITE, buffer);
 }
 
-int BufferValue()
+int BufferValue(void)
 {
     return IsBufferAlpha() ? GetMemoryValue(buffer) : atoi(buffer);
 }
