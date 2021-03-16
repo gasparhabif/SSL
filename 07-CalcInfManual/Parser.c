@@ -15,13 +15,13 @@ static void EvaluateSentence(void)
 {
     int result;
     currentToken = GetNextToken();
-    if (IsNextToken(IDENTIFICATOR))
+    if (IsExpectedToken(IDENTIFICATOR))
     {
         char tempID[BUFFER_SIZE];
         strcpy(tempID, buffer);
         CleanBuffer();
 
-        if (IsNextToken(ASSIGNATION))
+        if (IsExpectedToken(ASSIGNATION))
         {
             result = EvaluateExpresion();
             AddMemoryBlock(tempID, result);
@@ -43,15 +43,15 @@ static void EvaluateSentence(void)
 static int EvaluateExpresion()
 {
     int result = EvaluateTerm();
-    return IsNextToken(ADDITION) ? result + EvaluateExpresion()
-                                 : result;
+    return IsExpectedToken(ADDITION) ? result + EvaluateExpresion()
+                                     : result;
 }
 
 static int EvaluateTerm()
 {
     int result = EvaluateFactor();
-    return IsNextToken(PRODUCT) ? result * EvaluateTerm()
-                                : result;
+    return IsExpectedToken(PRODUCT) ? result * EvaluateTerm()
+                                    : result;
 }
 
 static int EvaluateFactor()
@@ -69,7 +69,7 @@ static int EvaluateFactor()
     case OP_PARENTHESIS:
         currentToken = GetNextToken();
         result = EvaluateExpresion();
-        if (!(IsNextToken(CL_PARENTHESIS)))
+        if (!(IsExpectedToken(CL_PARENTHESIS)))
             ThrowSintacticalException(TokenToString(currentToken), "Paréntesis de Cierre ')'");
         else
             return result;
@@ -79,6 +79,7 @@ static int EvaluateFactor()
         if (strlen(buffer))
         {
             result = BufferValue();
+            CleanBuffer();
             RestartOnError();
             return result;
         }
@@ -99,7 +100,7 @@ static int EvaluateFactor()
     return result;
 }
 
-static bool IsNextToken(Token expectedToken)
+static bool IsExpectedToken(Token expectedToken)
 {
     bool res = expectedToken == currentToken;
     if (res)
