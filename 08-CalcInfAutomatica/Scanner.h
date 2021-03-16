@@ -15,6 +15,7 @@ enum Tokens
 };
 
 typedef enum Tokens Token;
+int currentToken;
 
 Token GetNextToken(void);
 void PrintToken(Token t);

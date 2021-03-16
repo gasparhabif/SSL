@@ -374,8 +374,8 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[16] =
     {   0,
-        0,    0,   11,    9,    8,    3,    4,    6,    5,    1,
-        7,    2,    1,    2,    0
+        0,    0,   11,    9,    8,    4,    5,    7,    6,    1,
+        3,    2,    1,    2,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -744,38 +744,38 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
+#line 19 "Scanner.l"
+return ASSIGNATION;
+	YY_BREAK
+case 4:
+YY_RULE_SETUP
 #line 20 "Scanner.l"
 return OP_PARENTHESIS;
 	YY_BREAK
-case 4:
+case 5:
 YY_RULE_SETUP
 #line 21 "Scanner.l"
 return CL_PARENTHESIS;
 	YY_BREAK
-case 5:
+case 6:
 YY_RULE_SETUP
 #line 22 "Scanner.l"
 return ADDITION;
 	YY_BREAK
-case 6:
+case 7:
 YY_RULE_SETUP
 #line 23 "Scanner.l"
 return PRODUCT;
 	YY_BREAK
-case 7:
-YY_RULE_SETUP
-#line 24 "Scanner.l"
-return ASSIGNATION;
-	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 25 "Scanner.l"
+#line 24 "Scanner.l"
 return END;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 26 "Scanner.l"
+#line 25 "Scanner.l"
 {
                         ThrowLexicalException();
                         return INITIAL;
@@ -783,7 +783,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 30 "Scanner.l"
+#line 29 "Scanner.l"
 ECHO;
 	YY_BREAK
 #line 790 "<stdout>"
@@ -1783,7 +1783,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 30 "Scanner.l"
+#line 29 "Scanner.l"
 
 
 
